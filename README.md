@@ -1,10 +1,55 @@
 # Global Design Stress Test
 
-A portable **Cursor Agent Skill** (and multi-LLM workflow) for stress-testing UI designs against **internationalization**, **design-time accessibility**, and **font scaling** across global locales.
+A portable **Cursor Agent Skill** (and multi-LLM workflow) for stress-testing UI designs against **internationalization**, **design-time accessibility**, and **font scaling** across **13 core languages** (30 locales in the extended pack).
+
+## Languages stress-tested
+
+Every run evaluates your design against localized copy, layout, RTL, date/time formats, and font scaling. The **core pack** (default) covers **13 languages**:
+
+| # | Language | Locale | Script | RTL | Notes |
+|---|----------|--------|--------|-----|-------|
+| 1 | **German** | `de-DE` | Latin | — | Long-string stress priority |
+| 2 | **French** | `fr-FR` | Latin | — | Long labels |
+| 3 | **Italian** | `it-IT` | Latin | — | |
+| 4 | **Dutch** | `nl-NL` | Latin | — | |
+| 5 | **Spanish** | `es-ES` | Latin | — | |
+| 6 | **Portuguese** | `pt-PT` | Latin | — | |
+| 7 | **Arabic** | `ar-SA` | Arabic | ✓ | RTL mirroring, mixed-script |
+| 8 | **Chinese (Simplified)** | `zh-CN` | Han | — | CJK line breaking |
+| 9 | **Japanese** | `ja-JP` | CJK | — | CJK line breaking |
+| 10 | **Korean** | `ko-KR` | Hangul | — | |
+| 11 | **Dutch (Belgium)** | `nl-BE` | Latin | — | Regional variant |
+| 12 | **Polish** | `pl-PL` | Latin | — | Long-string stress priority |
+| 13 | **Norwegian** | `nb-NO` | Latin | — | |
+
+Set `"localePack": "core"` in config (default) to run all 13.
+
+### Extended pack — 17 additional locales (30 total)
+
+Add `"localePack": "extended"` for global market coverage. **Additional languages and regional variants:**
+
+| Language | Locales |
+|----------|---------|
+| **English** | UK (`en-GB`), Ireland (`en-IE`), US (`en-US`), South Africa (`en-ZA`) |
+| **Czech** | `cs-CZ` |
+| **German** | Austria (`de-AT`), Switzerland (`de-CH`), Luxembourg (`de-LU`) |
+| **French** | Switzerland (`fr-CH`), Luxembourg (`fr-LU`), Belgium (`fr-BE`) |
+| **Italian** | Switzerland (`it-CH`) |
+| **Danish** | `da-DK` |
+| **Finnish** | `fi-FI` |
+| **Greek** | `el-GR` |
+| **Russian** | `ru-RU` |
+| **Swedish** | `sv-SE` |
+
+**Gulf / MENA markets** (Bahrain, Kuwait, Lebanon, Oman, Qatar, Saudi Arabia, UAE) are stress-tested via **Arabic** (`ar-SA`) for RTL layout and script — regional copy may differ.
+
+**Custom locales:** pass any BCP-47 code with `"localePack": "custom"`.
+
+Full metadata (24h clock, long-string risk, scripts): [references/locale-registry.md](references/locale-registry.md).
 
 ## What it does
 
-1. **i18n stress** — layout, RTL, long strings, locale formats (13–30+ locales)
+1. **i18n stress** — layout, RTL, long strings, locale formats (**13 core languages**, up to **30 locales** extended)
 2. **Accessibility** — contrast, touch targets, focus order, localized screen reader copy
 3. **Font scaling** — small / default / large user settings (Dynamic Type, Android font size, web zoom)
 4. **Cursor report** — structured PASS/FAIL matrix with critical findings
@@ -54,13 +99,13 @@ Or mention: *i18n stress test*, *font scaling QA*, *RTL layout check*, *multilin
 
 ## Locale packs
 
-| Pack | Locales | Use when |
-|------|---------|----------|
-| `core` | 13 | Fast run — ~80% of i18n risk |
-| `extended` | 30 | Full global market coverage |
-| `custom` | Your list | Ad hoc BCP-47 codes |
+| Pack | Languages / locales | Use when |
+|------|---------------------|----------|
+| `core` | **13 languages** (see table above) | Default — covers ~80% of i18n risk |
+| `extended` | **30 locales** across 20+ language variants | Full EU, Gulf, and APAC coverage |
+| `custom` | Your BCP-47 list | Ad hoc markets |
 
-See [references/locale-registry.md](references/locale-registry.md).
+See [references/locale-registry.md](references/locale-registry.md) for the complete registry.
 
 ## Workflow phases
 

@@ -1,11 +1,19 @@
 ---
 name: global-design-stress-test
-description: Stress-tests UI designs for internationalization and design-time accessibility across locales and regions, including font scaling at small, default, and large user settings. Use when the user mentions i18n stress test, multilingual design QA, RTL layout, locale matrix, global markets, dynamic type, font scaling, or accessibility + translation review. Produces a Cursor report and Figma documentation matrix.
+description: Stress-tests UI designs for internationalization and design-time accessibility across 13 core languages (30 locales extended), including font scaling at small, default, and large user settings. Use when the user mentions i18n stress test, multilingual design QA, RTL layout, locale matrix, global markets, German French Arabic Japanese, dynamic type, font scaling, or accessibility + translation review. Produces a Cursor report and Figma documentation matrix.
 ---
 
 # Global Design Stress Test
 
 Orchestrates i18n layout stress, design-time accessibility, and font scaling across locales. Delivers a structured Cursor report and pushes documentation back to Figma.
+
+## Languages covered
+
+**Core (default — 13 languages):** German, French, Italian, Dutch, Spanish, Portuguese, Arabic (RTL), Chinese, Japanese, Korean, Dutch (Belgium), Polish, Norwegian.
+
+**Extended (+17 locales, 30 total):** adds English (UK, IE, US, ZA), Czech, German (AT, CH, LU), French (CH, LU, BE), Italian (CH), Danish, Finnish, Greek, Russian, Swedish. Gulf markets via Arabic.
+
+See [locale-registry.md](references/locale-registry.md) or [README.md](README.md#languages-stress-tested).
 
 ## Prerequisites
 

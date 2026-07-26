@@ -2,6 +2,28 @@
 
 BCP-47 locales for global design stress testing. Three tiers control matrix size.
 
+## Core languages (13) — default pack
+
+These **13 languages** are stress-tested when `"localePack": "core"`:
+
+1. German (`de-DE`)
+2. French (`fr-FR`)
+3. Italian (`it-IT`)
+4. Dutch (`nl-NL`)
+5. Spanish (`es-ES`)
+6. Portuguese (`pt-PT`)
+7. Arabic (`ar-SA`) — RTL
+8. Chinese / Simplified (`zh-CN`)
+9. Japanese (`ja-JP`)
+10. Korean (`ko-KR`)
+11. Dutch — Belgium (`nl-BE`)
+12. Polish (`pl-PL`)
+13. Norwegian (`nb-NO`)
+
+## Extended pack — +17 locales (30 total)
+
+Adds English (UK, Ireland, US, South Africa), Czech, German (Austria, Switzerland, Luxembourg), French (Switzerland, Luxembourg, Belgium), Italian (Switzerland), Danish, Finnish, Greek, Russian, and Swedish. Gulf markets use Arabic (`ar-SA`) as the RTL representative.
+
 ## Tiers
 
 | Tier | ID | Count | Use when |
