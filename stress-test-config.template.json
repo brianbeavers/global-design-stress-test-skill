@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Copy to project root as stress-test-config.json and customize.",
+  "projectName": "Your Project Name",
+  "figmaFileKey": "YOUR_FIGMA_FILE_KEY",
+  "baselineNodeId": "0000:0000",
+  "outputSectionName": "Global Stress Test — {projectName}",
+  "platform": "ios",
+  "baselineLocale": "en-US",
+  "localePack": "core",
+  "customLocales": [],
+  "screenVariants": ["default"],
+  "executionPath": "figma",
+  "fontScaleSteps": ["small", "default", "large"],
+  "fontScaleSweepLocales": "risk-set",
+  "fontScaleProfile": "platform-default",
+  "prototype": {
+    "devServerUrl": "http://localhost:5173",
+    "scenarioParam": "scenario",
+    "captureSelector": ".app-root",
+    "fontScaleParam": "fontScale"
+  }
+}
