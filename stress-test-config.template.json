@@ -19,7 +19,7 @@
   "embedScreenshotsInReport": true,
   "failureComparisonBaseline": "en-US",
   "reportOnly": false,
-  "_reportOnlyNote": "When true with executionPath prototype: Cursor-report-only — no Figma matrix, upload_assets, or Phase 4.",
+  "_reportOnlyNote": "When true with executionPath prototype: Cursor-report-only. INVALID with executionPath figma alone — use both+reportOnly true for dual capture or figma+reportOnly false for full Figma run.",
   "fontScaleSteps": ["small", "default", "large"],
   "fontScaleSweepLocales": "risk-set",
   "fontScaleProfile": "platform-default",

@@ -1,16 +1,16 @@
 ---
 name: global-design-stress-test
-description: Stress-tests UI designs for internationalization and design-time accessibility across 13 core languages (30 locales extended), including font scaling at small, default, and large user settings. Use when the user mentions i18n stress test, multilingual design QA, RTL layout, locale matrix, global markets, German French Arabic Japanese, dynamic type, font scaling, or accessibility + translation review. Produces a Cursor report and Figma documentation matrix.
+description: Stress-tests UI designs for internationalization and design-time accessibility across 13 core languages (30 locales extended), including font scaling at small, default, and large user settings. Use when the user mentions i18n stress test, multilingual design QA, RTL layout, locale matrix, global markets, German French Arabic Japanese, dynamic type, font scaling, or accessibility + translation review. Produces a Cursor report with embedded screenshots; optional Figma matrix when reportOnly is false (default).
 ---
 
 # Global Design Stress Test
 
-Orchestrates i18n layout stress, design-time accessibility, and font scaling across locales. Delivers a structured Cursor report **with embedded screenshots** and pushes a **full visual matrix** back to Figma.
+Orchestrates i18n layout stress, design-time accessibility, and font scaling across locales. Delivers a structured **Cursor report** with embedded screenshots. When `reportOnly: false` (default), also pushes a **full visual matrix** to Figma in Phase 4.
 
 ## Quick start (users)
 
-1. Copy `stress-test-config.template.json` → `stress-test-config.json` and fill in project name, Figma URL, screen variants.
-2. In Cursor: `Run global-design-stress-test on [Figma URL]`
+1. Copy `stress-test-config.template.json` → `stress-test-config.json` and fill in project name, screen variants, and Figma URL (or use prototype + `reportOnly: true` if no Figma).
+2. In Cursor: `Run global-design-stress-test on [Figma URL]` (or invoke with config only for prototype runs)
 3. Read the report **top-down**: action items (P0/P1) → failure screenshots → matrix appendix.
 
 Full guide: [references/quick-start.md](references/quick-start.md) · Reading results: [references/how-to-read-results.md](references/how-to-read-results.md)
@@ -23,9 +23,20 @@ Every run must **show** translated and accessibility-stressed UI — not only PA
 |-------------|--------|
 | **All locales** | Full matrix — every locale × screen gets a visual cell |
 | **Real translations** | Actual target-language strings in UI — not placeholder frame labels |
-| **Both outputs** | Figma matrix + Cursor chat with embedded screenshots |
-| **Both paths** | Figma clone and/or prototype capture — use what the project has |
+| **Cursor report** | Always — action items, failure screenshots, matrix appendix |
+| **Figma matrix** | When `reportOnly: false` (default) — Phase 4 push; skipped when `reportOnly: true` |
+| **Capture path** | Prototype and/or Figma MCP — see valid mode table below |
 | **Failure compare** | Side-by-side baseline vs failing locale with callouts |
+
+**Valid modes:**
+
+| Mode | Config | Localized UI source |
+|------|--------|---------------------|
+| Full (default) | `reportOnly: false` | Figma clones (Phase 4) and/or prototype PNGs |
+| Figma-free | `prototype` + `reportOnly: true` | Prototype captures only |
+| Dual capture | `both` + `reportOnly: true` | Prototype captures + read-only Figma baseline compare |
+
+**Invalid:** `executionPath: "figma"` + `reportOnly: true` — cannot swap localized text without Figma writes or a prototype. Phase 0 blocks with `CONFIG_INVALID`.
 
 Read [visual-evidence-spec.md](references/visual-evidence-spec.md) and [translation-workflow.md](references/translation-workflow.md) before Phase 1.
 
@@ -97,6 +108,7 @@ Task Progress:
    - Resolved locale count and `screenVariants` must each be ≥ 1
    - Log expected matrix size: `locales × screenVariants` cells
    - Reject default `projectName` (`Your Project Name`) — **every path**, including Figma-free mode
+   - Reject **`executionPath: "figma"` + `reportOnly: true`** — cannot produce localized UI (no Figma writes, no prototype); suggest `prototype` + `reportOnly: true` or `figma` + `reportOnly: false`
    - Reject Figma template placeholders when `reportOnly` is `false` **or** `executionPath` is `figma`/`both` — parse Figma URL first if user provided one
    - **STOP** and ask the user to fix config — do not run Phases 1–4 with invalid or placeholder values
 
@@ -126,7 +138,7 @@ Task Progress:
    No → create from template, gather inputs
 2. executionPath + reportOnly? (cross-ref step 7)
    figma + reportOnly false → Phases 1–2.6 via Figma MCP; push matrix (Phase 4)
-   figma + reportOnly true  → Phases 1–2.6 read-only Figma MCP + report; no use_figma, no Phase 4
+   figma + reportOnly true  → **INVALID** — STOP CONFIG_INVALID (use prototype+reportOnly true or figma+reportOnly false)
    prototype + reportOnly false → Phases 1–2.6 via capture scripts; buffer PNGs; Phase 4 upload + matrix
    prototype + reportOnly true  → Phases 1–2.6 via capture scripts; report embeds only (Figma-free)
    both + reportOnly false → Figma matrix + prototype PNG overlay in Figma; Phases 1–2.6 on both
@@ -154,14 +166,17 @@ For each **locale × screen variant** in config, evaluate against [i18n-checklis
 
 Follow [translation-workflow.md](references/translation-workflow.md) for string inventory and swap. Follow [visual-evidence-spec.md](references/visual-evidence-spec.md) for screenshots and **Figma write policy** — Phases 1–2.6 never call `upload_assets`; Phase 4 is the sole Figma write phase when `reportOnly: false`.
 
-### Figma path — `reportOnly: true` (read-only)
+### Figma MCP — read-only (`both` + `reportOnly: true` only)
+
+When `executionPath` is `both` and `reportOnly` is `true`:
 
 1. `get_design_context` + `get_screenshot` on baseline node — **no `use_figma`**
 2. Build **string inventory** from baseline text nodes
-3. Translate inventory per locale (project copy or `[MT]`)
-4. Localized screenshots: use **prototype capture** if `executionPath` is `prototype` or `both`; else baseline screenshot + string list (mark **PARTIAL** if no localized capture)
-5. Buffer screenshots for Cursor report
-6. FAIL cells: side-by-side compare in **report only**
+3. **Prototype path** (same run) provides localized screenshots per locale
+4. Compare prototype PNGs against read-only Figma baseline in report
+5. FAIL cells: side-by-side compare in **report only**
+
+Do not use this subsection when `executionPath` is `figma` alone — that combo is **CONFIG_INVALID** at Phase 0.
 
 ### Figma path — `reportOnly: false` (capture; writes deferred to Phase 4)
 

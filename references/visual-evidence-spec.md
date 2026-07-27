@@ -159,12 +159,12 @@ Do not advance to the next locale until step 3 passes for string visibility.
 
 | executionPath | reportOnly | Figma matrix | Prototype PNGs | Cursor embeds |
 |---------------|------------|--------------|----------------|---------------|
-| `figma` | `false` | Required — translated clones | — | Screenshots from Figma MCP |
-| `figma` | `true` | Skip — read-only MCP; no `use_figma` | — | Required (sole deliverable) |
+| `figma` | `false` | Required — translated clones (Phase 4) | — | Screenshots from Figma MCP |
+| `figma` | `true` | **INVALID** — blocked at Phase 0 | — | — |
 | `prototype` | `false` | Phase 4 — `upload_assets` PNGs | Required (buffered Phase 1) | Same PNGs embedded |
 | `prototype` | `true` | **Skip** — no `upload_assets` | Required | Required (sole deliverable) |
 | `both` | `false` | Required | Required | Both sources embedded |
-| `both` | `true` | Skip | Required | Required (sole deliverable) |
+| `both` | `true` | Skip | Required (localized UI) | Prototype PNGs + read-only Figma baseline |
 
 **Figma-free mode:** `executionPath: "prototype"` + `reportOnly: true` — no `figmaFileKey`, no Phase 4, no `upload_assets`. Visual evidence lives in the Cursor report only.
 
@@ -179,6 +179,7 @@ Do not advance to the next locale until step 3 passes for string visibility.
 | PASS/FAIL table with no images | Tell without show |
 | Failures-only matrix | User asked for all locales |
 | Skipping Phase 4 when `reportOnly: false` | Figma is primary async deliverable |
+| `executionPath: "figma"` + `reportOnly: true` | Cannot produce localized UI — blocked at Phase 0 |
 | Prototype + `reportOnly: true` but calling `upload_assets` | Contradicts Figma-free mode — report only |
 | `use_figma` when `reportOnly: true` | Mutates Figma during Cursor-report-only run |
 | `upload_assets` in Phase 1 before Phase 4 section exists | Wrong order — buffer PNGs; upload in Phase 4 |

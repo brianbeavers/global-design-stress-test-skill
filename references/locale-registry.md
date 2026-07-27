@@ -147,7 +147,8 @@ elif localePack == "custom":
 | Resolved count | `len(locales) >= 1` after resolution | **STOP.** Do not emit empty matrix or mark workflow complete. |
 | Screen variants | `screenVariants` non-empty array | **STOP.** Ask user for at least one screen variant. |
 | Matrix size | `len(locales) × len(screenVariants) >= 1` | **STOP.** Report expected cell count before Phase 1. |
-| Figma targets | Required when Figma MCP will run — see **Figma target rules** below | **STOP.** Status `CONFIG_INVALID`. Ask for Figma URL, or use **Figma-free mode:** `executionPath: "prototype"` + `reportOnly: true` (Cursor report only — no Figma matrix or `upload_assets`). |
+| Mode combo | `executionPath: "figma"` + `reportOnly: true` is **invalid** — no localized UI without Figma writes or prototype | **STOP.** Status `CONFIG_INVALID`. Use `prototype` + `reportOnly: true` (Figma-free) or `figma` + `reportOnly: false` (full Figma run). |
+| Figma targets | Required when Figma MCP will run — see **Figma target rules** below | **STOP.** Status `CONFIG_INVALID`. Ask for Figma URL, or use **Figma-free mode:** `executionPath: "prototype"` + `reportOnly: true`. |
 | Project name | `projectName` must not be template default `Your Project Name` — **every path**, including Figma-free mode | **STOP.** Ask user for a real project name (used in report title). |
 
 **Figma target rules** — validate `figmaFileKey` and `baselineNodeId` when **any** of:

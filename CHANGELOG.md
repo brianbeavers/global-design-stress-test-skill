@@ -2,6 +2,13 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.2.2] — 2026-07-27
+
+### Fixed
+
+- **SKILL intro:** Figma matrix optional when `reportOnly: true`; valid mode table replaces "both outputs" wording
+- **Invalid combo:** Phase 0 blocks `executionPath: "figma"` + `reportOnly: true` (cannot produce localized UI without writes or prototype)
+
 ## [1.2.1] — 2026-07-27
 
 ### Fixed

@@ -47,8 +47,11 @@ Read [how-to-read-results.md](how-to-read-results.md) to interpret the report.
 |-----------|--------|
 | Full run (Figma + report) | `executionPath: "figma"`, `reportOnly: false` |
 | App prototype, no Figma writes | `executionPath: "prototype"`, `reportOnly: true` |
+| Prototype + Figma baseline compare, no Figma writes | `executionPath: "both"`, `reportOnly: true` |
 | Prototype + Figma documentation | `executionPath: "both"`, `reportOnly: false` |
 | Fast first pass | `localePack: "core"`, `fontScaleSweepLocales: "risk-set"` |
+
+**Invalid:** `executionPath: "figma"` + `reportOnly: true` — Phase 0 will reject.
 
 ## If the run stops at Phase 0
 
