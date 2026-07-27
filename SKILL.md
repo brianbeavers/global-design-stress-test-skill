@@ -85,12 +85,17 @@ Task Progress:
    - If `localePack` is `custom`, `customLocales` must contain at least one BCP-47 code (empty `[]` is **CONFIG_INVALID**)
    - Resolved locale count and `screenVariants` must each be ≥ 1
    - Log expected matrix size: `locales × screenVariants` cells
-   - **STOP** and ask the user to fix config — do not run Phases 1–4 with zero cells
+   - When Figma MCP will run: reject template placeholders for `figmaFileKey` (`YOUR_FIGMA_FILE_KEY`, etc.) and `baselineNodeId` (`0000:0000`, etc.) — parse Figma URL first if user provided one
+   - Reject default `projectName` (`Your Project Name`)
+   - **STOP** and ask the user to fix config — do not run Phases 1–4 with invalid or placeholder values
 
 ### Config fields
 
 | Field | Purpose |
 |-------|---------|
+| `projectName` | Report and Figma section title — must not remain template default |
+| `figmaFileKey` | Figma file key — required when Figma MCP runs; no template placeholders |
+| `baselineNodeId` | Baseline frame node ID (`1234:5678`) — required when Figma MCP runs; no template placeholders |
 | `localePack` | Which locales to include — see locale-registry tiers |
 | `customLocales` | BCP-47 codes — **required non-empty** when `localePack` is `custom`; ignored otherwise |
 | `screenVariants` | Project screens to stress (e.g. widget, sheet, error) — must be non-empty |
@@ -118,6 +123,9 @@ Task Progress:
    custom          → user-supplied list (customLocales must be non-empty)
    → Validate: len(locales) >= 1 and len(screenVariants) >= 1
       Fail → STOP (CONFIG_INVALID), do not proceed
+   → Validate Figma targets when executionPath is figma/both or reportOnly is false
+      Reject YOUR_FIGMA_FILE_KEY, 0000:0000, and other template placeholders
+      Fail → STOP (CONFIG_INVALID), ask for Figma URL
 4. All paths — Phase 2.5 font scaling on risk locales (or all if configured)
 5. All paths — Phase 2.6 post-scale a11y on scaled screenshots (contrast + touch — mandatory)
 6. Delegate flagged a11y to apca-compliance-figma + create-voice

@@ -2,6 +2,13 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.4] — 2026-07-27
+
+### Fixed
+
+- **Phase 0 Figma placeholders:** blocks unchanged template values (`YOUR_FIGMA_FILE_KEY`, `0000:0000`, default project name) before Phases 1–4 when Figma MCP will run
+- **Config template:** inline notes on fields that must be replaced before Phase 1
+
 ## [1.1.3] — 2026-07-27
 
 ### Fixed

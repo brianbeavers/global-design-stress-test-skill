@@ -134,6 +134,24 @@ elif localePack == "custom":
 | Resolved count | `len(locales) >= 1` after resolution | **STOP.** Do not emit empty matrix or mark workflow complete. |
 | Screen variants | `screenVariants` non-empty array | **STOP.** Ask user for at least one screen variant. |
 | Matrix size | `len(locales) × len(screenVariants) >= 1` | **STOP.** Report expected cell count before Phase 1. |
+| Figma targets | Required when Figma MCP will run — see **Figma target rules** below | **STOP.** Status `CONFIG_INVALID`. Ask for Figma URL or set `reportOnly: true` with `executionPath: "prototype"`. |
+| Project name | `projectName` must not be template default `Your Project Name` | **STOP.** Ask user for a real project name (used in report and Figma section title). |
+
+**Figma target rules** — validate `figmaFileKey` and `baselineNodeId` when **any** of:
+
+- `executionPath` is `figma` or `both` (Phase 1 uses Figma MCP), **or**
+- `reportOnly` is `false` (Phase 4 push or matrix upload)
+
+Skip Figma target checks only when `executionPath` is `prototype` **and** `reportOnly` is `true`.
+
+**Rejected placeholder values** (non-exhaustive — treat any obvious template copy as invalid):
+
+| Field | Reject if |
+|-------|-----------|
+| `figmaFileKey` | empty; `YOUR_FIGMA_FILE_KEY`; `YOUR_FILE_KEY`; starts with `YOUR_`; shorter than 10 characters |
+| `baselineNodeId` | empty; `0000:0000`; `0:0`; `YOUR_BASELINE_NODE_ID`; starts with `YOUR_`; does not match `^\d+:\d+$` (after normalizing `-` → `:`) |
+
+Parse Figma URL **before** validation when the user supplies a link — overwrite placeholders in config with extracted `fileKey` and `nodeId`.
 
 When `localePack` is `core` or `extended`, `customLocales` is **ignored** (may be `[]` in template). Only the custom pack reads `customLocales`.
 
