@@ -96,17 +96,17 @@ Task Progress:
    - If `localePack` is `custom`, `customLocales` must contain at least one BCP-47 code (empty `[]` is **CONFIG_INVALID**)
    - Resolved locale count and `screenVariants` must each be ≥ 1
    - Log expected matrix size: `locales × screenVariants` cells
-   - When Figma MCP will run: reject template placeholders for `figmaFileKey` (`YOUR_FIGMA_FILE_KEY`, etc.) and `baselineNodeId` (`0000:0000`, etc.) — parse Figma URL first if user provided one
-   - Reject default `projectName` (`Your Project Name`)
+   - Reject default `projectName` (`Your Project Name`) — **every path**, including Figma-free mode
+   - Reject Figma template placeholders when `reportOnly` is `false` **or** `executionPath` is `figma`/`both` — parse Figma URL first if user provided one
    - **STOP** and ask the user to fix config — do not run Phases 1–4 with invalid or placeholder values
 
 ### Config fields
 
 | Field | Purpose |
 |-------|---------|
-| `projectName` | Report and Figma section title — must not remain template default |
-| `figmaFileKey` | Figma file key — required when Figma MCP runs; no template placeholders |
-| `baselineNodeId` | Baseline frame node ID (`1234:5678`) — required when Figma MCP runs; no template placeholders |
+| `projectName` | Report title — must not remain template default (validated on every path) |
+| `figmaFileKey` | Required when `reportOnly: false` or figma/both path; no template placeholders |
+| `baselineNodeId` | Required when `reportOnly: false` or figma/both path; no template placeholders |
 | `localePack` | Which locales to include — see locale-registry tiers |
 | `customLocales` | BCP-47 codes — **required non-empty** when `localePack` is `custom`; ignored otherwise |
 | `screenVariants` | Project screens to stress (e.g. widget, sheet, error) — must be non-empty |

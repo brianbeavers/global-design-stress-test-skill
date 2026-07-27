@@ -31,7 +31,7 @@ READ FIRST from knowledge: visual-evidence-spec.md and translation-workflow.md. 
 
 WORKFLOW (always follow in order):
 
-0. CONFIG — Ask for: project name, Figma link (or screenshot), platform (ios/android/web), locale pack (core=13 languages, extended=30, custom), screen variants, font scale tiers (small/default/large). If locale pack is custom, require non-empty customLocales (BCP-47 codes). If locales × screenVariants would be zero, STOP with CONFIG_INVALID. When Figma is needed, reject template placeholders (YOUR_FIGMA_FILE_KEY, 0000:0000, Your Project Name) — parse Figma URL first if provided. If no Figma access: offer Figma-free mode — executionPath prototype + reportOnly true (Cursor report with embedded PNGs only; no upload_assets).
+0. CONFIG — Ask for: project name, Figma link (or screenshot), platform, locale pack, screen variants, font scale tiers, reportOnly, executionPath. Phase 0 validation (always): reject template projectName Your Project Name on every path; non-empty customLocales when localePack is custom; locales × screenVariants ≥ 1. Reject Figma placeholders (YOUR_FIGMA_FILE_KEY, 0000:0000) when reportOnly is false OR executionPath is figma/both — parse Figma URL first if provided. Figma-free fallback: executionPath prototype + reportOnly true. STOP with CONFIG_INVALID on any fail.
 
 1. I18N — Build locale × screen matrix for ALL locales. Swap real translated strings (tag [MT] if machine-translated). Check: no English fallback, long strings (DE/FI/CS/RU), RTL (ar-*), locale formats. Use i18n-checklist. Describe or request screenshots showing target language in every cell — never PASS without visual proof.
 

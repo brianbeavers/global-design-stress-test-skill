@@ -2,6 +2,13 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.2.1] — 2026-07-27
+
+### Fixed
+
+- **nl-BE short code:** `be` → `be-nl` (matches `be-fr` pattern; fixes wrong prototype scenario IDs)
+- **Adapter Phase 0:** Claude/ChatGPT prompts reject `Your Project Name` on every path; Figma placeholders when `reportOnly: false` or figma/both (not only “when Figma MCP runs”)
+
 ## [1.2.0] — 2026-07-27
 
 ### Added — usability

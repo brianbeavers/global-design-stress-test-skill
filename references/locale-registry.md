@@ -32,6 +32,19 @@ Adds English (UK, Ireland, US, South Africa), Czech, German (Austria, Switzerlan
 | Extended | `extended` | Core + 17 | Global markets (EU, Gulf, APAC additions) |
 | Custom | `custom` | User-defined | Pass `customLocales` in config |
 
+## Short codes (scenario IDs, copy keys)
+
+The **Short** column is used for prototype scenario URLs and copy bundle keys, e.g. `i18n-{short}-{variant}` → `i18n-de-widget`.
+
+| Rule | Example |
+|------|---------|
+| Default | ISO 639-1 language subtag from BCP-47 (`de-DE` → `de`) |
+| Belgium | `{market}-{lang}` — `nl-BE` → **`be-nl`** (Dutch Belgium), `fr-BE` → **`be-fr`** (French Belgium) — never use bare `be` |
+| Switzerland | `{market}-{lang}` — `de-CH` → `ch-de`, `fr-CH` → `ch-fr` |
+| Norway | `nb-NO` → `no` (common alias) |
+
+**Do not** use `be` alone for `nl-BE` — it is not a Dutch language code and collides with Belgium market ambiguity.
+
 ## Core tier (13 locales)
 
 | Code | Short | Label | Market | RTL | 24h | Long string | Script | Sample location |
@@ -46,7 +59,7 @@ Adds English (UK, Ireland, US, South Africa), Czech, German (Austria, Switzerlan
 | `zh-CN` | zh | Chinese | China | — | ✓ | Medium | Han | Shanghai (PVG) |
 | `ja-JP` | ja | Japanese | Japan | — | ✓ | Medium | CJK | Tokyo (NRT) |
 | `ko-KR` | ko | Korean | Korea | — | ✓ | Medium | Hangul | Seoul (ICN) |
-| `nl-BE` | be | Belgian (Dutch) | Belgium | — | ✓ | Medium | Latin | Brussels (BRU) |
+| `nl-BE` | be-nl | Belgian (Dutch) | Belgium | — | ✓ | Medium | Latin | Brussels (BRU) |
 | `pl-PL` | pl | Polish | Poland | — | ✓ | High | Latin | Warsaw (WAW) |
 | `nb-NO` | no | Norwegian | Norway | — | ✓ | Medium | Latin | Oslo (OSL) |
 
@@ -135,7 +148,7 @@ elif localePack == "custom":
 | Screen variants | `screenVariants` non-empty array | **STOP.** Ask user for at least one screen variant. |
 | Matrix size | `len(locales) × len(screenVariants) >= 1` | **STOP.** Report expected cell count before Phase 1. |
 | Figma targets | Required when Figma MCP will run — see **Figma target rules** below | **STOP.** Status `CONFIG_INVALID`. Ask for Figma URL, or use **Figma-free mode:** `executionPath: "prototype"` + `reportOnly: true` (Cursor report only — no Figma matrix or `upload_assets`). |
-| Project name | `projectName` must not be template default `Your Project Name` | **STOP.** Ask user for a real project name (used in report and Figma section title). |
+| Project name | `projectName` must not be template default `Your Project Name` — **every path**, including Figma-free mode | **STOP.** Ask user for a real project name (used in report title). |
 
 **Figma target rules** — validate `figmaFileKey` and `baselineNodeId` when **any** of:
 

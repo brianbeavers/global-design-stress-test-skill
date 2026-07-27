@@ -49,7 +49,7 @@ Save as `stress-test-config.json` in your project root.
 **Patterns that work well:**
 
 - Centralized copy bundles (`widgetCopy`, `sheetCopy`) keyed by BCP-47 locale
-- Scenario IDs: `i18n-{short}-{variant}` (e.g. `i18n-de-widget`)
+- Scenario IDs: `i18n-{short}-{variant}` (e.g. `i18n-de-widget`, `i18n-be-nl-widget` for Belgian Dutch — see locale-registry Short codes)
 - RTL via `dir=rtl` on root container for `ar-*` locales
 - Batch capture script (Playwright or similar) driven by scenario URL params
 
