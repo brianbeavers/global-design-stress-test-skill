@@ -1,10 +1,28 @@
 # Global Design Stress Test — {Project}
 
 **Date:** {YYYY-MM-DD}  
-**Figma baseline:** [{baselineNodeId}](https://www.figma.com/design/{fileKey}/?node-id={nodeIdHyphen})  
 **Locale pack:** {core | extended | custom}  
 **Platform:** {ios | android | web}  
-**Execution path:** {figma | prototype | both}
+**Execution path:** {figma | prototype | both}  
+**Report mode:** {reportOnly ? `Cursor-report-only (Figma-free)` : `Cursor + Figma`}
+
+<!-- Agent: branch this template on config.reportOnly — see "Template branching" below -->
+
+**Figma baseline:** {include only when `reportOnly` is `false`}  
+[{baselineNodeId}](https://www.figma.com/design/{fileKey}/?node-id={nodeIdHyphen})
+
+**Design reference:** {include when `reportOnly` is `true` — prototype URL, screenshot bundle, or "captured via browser MCP"}
+
+---
+
+## Template branching (agents — do not paste into stakeholder report)
+
+| `reportOnly` | Include in report | Omit / mark N/A |
+|--------------|-------------------|-----------------|
+| `false` (default) | Figma baseline link, per-cell Figma frame refs, **Figma deliverables** section, Figma sign-off item | — |
+| `true` | Embedded screenshots for every locale, matrix, findings, font scaling summary | Figma baseline, Figma frame refs, **Figma deliverables** section, "Figma section link" sign-off |
+
+When `reportOnly: true`, the Cursor report **is** the deliverable. Do not insert placeholder Figma URLs (`{url}`).
 
 ---
 
@@ -40,7 +58,7 @@ Embed screenshots for **every** locale × screen. Do not list FAIL-only.
 
 - **Strings swapped:** {list key strings: EN → target, tag [MT] if machine-translated}
 - **Defect (if FAIL):** {visible issue — clip, overlap, RTL break, English fallback}
-- **Figma frame:** {link or node id}
+- **Figma frame:** {link or node id — **omit this bullet when `reportOnly: true`**}
 
 Repeat for each locale × screen in the matrix.
 
@@ -90,14 +108,27 @@ Repeat for each locale × screen in the matrix.
 
 ## A11y delegation notes
 
+<!-- When reportOnly: true — describe findings in prose; reference embedded screenshots, not Figma frame names -->
+
+**When `reportOnly: false`:**
+
 | Skill invoked | Scope | Output |
 |---------------|-------|--------|
 | apca-compliance-figma | {token pairs flagged} | `_Annotation / Contrast failures` |
 | create-voice | de-DE, ar-SA, ja-JP | `{Component} Screen reader — {locale}` frames |
 
+**When `reportOnly: true`:**
+
+| Skill invoked | Scope | Output |
+|---------------|-------|--------|
+| apca-compliance-figma | {token pairs flagged} | Contrast notes in report + screenshot refs |
+| create-voice | de-DE, ar-SA, ja-JP | Localized voice copy in report (no Figma frames) |
+
 ---
 
 ## Figma deliverables
+
+<!-- **Omit this entire section when `reportOnly: true`** — do not leave placeholder URLs -->
 
 | Section | Link | Frames |
 |---------|------|--------|
@@ -111,14 +142,25 @@ Repeat for each locale × screen in the matrix.
 
 ## Sign-off checklist
 
+**Always:**
+
 - [ ] All FAIL cells have findings with recommendations
 - [ ] DE+Large worst-case evaluated
 - [ ] RTL locales have focus order documented
-- [ ] Figma section link returned to stakeholder
+- [ ] Embedded screenshots for **every** locale × screen in this report
 - [ ] Optional: persisted to `docs/global-stress-test-{date}.md`
+
+**When `reportOnly: false` only:**
+
+- [ ] Figma section link returned to stakeholder
+
+**When `reportOnly: true` only:**
+
+- [ ] Confirmed: no Figma deliverables section in this report (Cursor-report-only run)
+- [ ] Prototype or capture source documented in header
 
 ---
 
 ## Out of scope (this run)
 
-- {List anything skipped: runtime axe, XL tier, custom locales, …}
+- {List anything skipped: runtime axe, XL tier, custom locales, Figma push when reportOnly, …}

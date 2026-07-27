@@ -20,9 +20,9 @@ A completed cell includes:
 | **Cursor chat** | Always — embedded screenshots for every locale × screen (default `embedScreenshotsInReport: true`) |
 | **Figma matrix** | When `reportOnly` is `false` (default) — full locale grid with translated UI |
 
-When `reportOnly: true`, the **Cursor report is the sole visual deliverable**. Skip Figma matrix creation, `upload_assets`, and Phase 4 entirely. Prototype PNGs or Figma MCP screenshots still feed the report — they are not uploaded to Figma.
+When `reportOnly: true`, the **Cursor report is the sole visual deliverable**. Skip Figma matrix creation, `upload_assets`, and Phase 4 entirely. Use the **reportOnly branch** of [report-template.md](report-template.md) — omit Figma deliverables and placeholder URLs. Prototype PNGs or Figma MCP screenshots still feed the report — they are not uploaded to Figma.
 
-When `reportOnly: false` (default), both Cursor embeds **and** Figma matrix are mandatory.
+When `reportOnly: false` (default), both Cursor embeds **and** Figma matrix are mandatory. Phase 3 report uses the full [report-template.md](report-template.md) including Figma deliverables.
 
 ## Full matrix — all locales
 

@@ -2,6 +2,13 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.6] — 2026-07-27
+
+### Fixed
+
+- **report-template.md:** branches on `reportOnly` — omits Figma baseline, deliverables section, frame refs, and Figma sign-off in Cursor-report-only mode
+- **Phase 3 (SKILL.md):** explicit template branching instructions; adapters updated
+
 ## [1.1.5] — 2026-07-27
 
 ### Fixed

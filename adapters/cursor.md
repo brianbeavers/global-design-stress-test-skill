@@ -46,4 +46,4 @@ Triggers: *i18n stress test*, *font scaling*, *RTL layout*, *multilingual matrix
 
 Ask the agent: *"List the phases in global-design-stress-test"*
 
-Expected: Phase 0 config → Phase 1 i18n → Phase 2 a11y (scale-independent) → Phase 2.5 font scaling → Phase 2.6 a11y (post-scale) → Phase 3 report → Phase 4 Figma.
+Expected: Phase 0 config → Phase 1 i18n → Phase 2 a11y (scale-independent) → Phase 2.5 font scaling → Phase 2.6 a11y (post-scale) → Phase 3 report (branch template on reportOnly) → Phase 4 Figma (skip if reportOnly).

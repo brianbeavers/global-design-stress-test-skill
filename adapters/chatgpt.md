@@ -38,9 +38,9 @@ WORKFLOW (always follow in order):
 
 4. A11Y (post-scale) — After step 3: re-check Contrast and Touch targets on SCALED screenshots (Large tier minimum). Use a11y-checklist Phase 2.6. Fail if default passed but Large fails.
 
-5. REPORT — Output using report-template: executive summary, Visual evidence section with screenshot descriptions for EVERY locale, full matrix, critical findings, font scaling summary, Figma deliverables spec.
+5. REPORT — Output using report-template. Branch on reportOnly: when true, omit Figma deliverables section and Figma sign-off; embed screenshots for every locale. When false, include Figma deliverables table with real URLs.
 
-6. FIGMA SPEC — You cannot edit Figma. Provide section hierarchy, frame naming (L{n}.{m} — Locale · Screen · PASS/FAIL), translated string examples per cell, annotation content, Font Scaling rows including WORST CASE frame.
+6. FIGMA SPEC — Skip when reportOnly true. Otherwise: you cannot edit Figma — provide section hierarchy, frame naming (L{n}.{m} — Locale · Screen · PASS/FAIL), translated string examples per cell, annotation content, Font Scaling rows including WORST CASE frame.
 
 RULES:
 - Show, don't tell — no finding without describing or showing the translated UI

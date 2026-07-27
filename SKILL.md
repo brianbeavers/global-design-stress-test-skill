@@ -224,6 +224,11 @@ Rules:
 
 Fill [report-template.md](references/report-template.md) and post in chat.
 
+**Branch on `reportOnly`:**
+
+- **`reportOnly: false` (default):** include Figma baseline link, per-cell Figma frame refs, **Figma deliverables** section, and Figma sign-off item
+- **`reportOnly: true`:** Cursor-report-only — **omit** Figma baseline, Figma frame bullets, entire **Figma deliverables** section, and "Figma section link" sign-off; do not use placeholder `{url}` values
+
 **Required:** embed screenshots for **every locale × screen** when `embedScreenshotsInReport` is true (default). FAIL cells include baseline side-by-side tables per [visual-evidence-spec.md](references/visual-evidence-spec.md).
 
 Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests persistence (include image paths or links).
