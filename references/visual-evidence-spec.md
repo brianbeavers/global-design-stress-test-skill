@@ -149,6 +149,8 @@ Do not advance to the next locale until step 3 passes for string visibility.
 
 **Figma-free mode:** `executionPath: "prototype"` + `reportOnly: true` — no `figmaFileKey`, no Phase 4, no `upload_assets`. Visual evidence lives in the Cursor report only.
 
+**`both` + `reportOnly: true`:** run Figma MCP and prototype captures for cross-check; embed both in the Cursor report — do **not** push Figma matrix or call `upload_assets`.
+
 ## Anti-patterns (never ship)
 
 | Anti-pattern | Why invalid |

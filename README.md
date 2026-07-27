@@ -137,7 +137,7 @@ See [references/locale-registry.md](references/locale-registry.md) for the compl
 |------|------|
 | `figma` (default) | Figma MCP — clone frames, swap text, annotate |
 | `prototype` | Runnable app + screenshot capture |
-| `both` | Figma matrix + prototype PNG verification |
+| `both` | Figma matrix + prototype PNG verification when `reportOnly: false`; dual capture in Cursor report only when `reportOnly: true` |
 
 ## Optional companion skills
 

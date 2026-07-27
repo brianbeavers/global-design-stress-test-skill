@@ -2,6 +2,12 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.7] — 2026-07-27
+
+### Fixed
+
+- **Decision tree:** `executionPath: "both"` now branches on `reportOnly` — report-only mode skips Figma matrix push and `upload_assets` while still allowing dual capture in the Cursor report
+
 ## [1.1.6] — 2026-07-27
 
 ### Fixed

@@ -113,10 +113,13 @@ Task Progress:
 ```
 1. stress-test-config.json exists?
    No → create from template, gather inputs
-2. executionPath?
-   figma     → Phases 1–2.6 via Figma MCP (default)
-   prototype → Phases 1–2.6 via dev server + capture scripts
-   both      → Figma matrix + prototype PNG overlay; Phases 1–2.6 on both
+2. executionPath + reportOnly? (cross-ref step 7)
+   figma + reportOnly false → Phases 1–2.6 via Figma MCP; push matrix (Phase 4)
+   figma + reportOnly true  → Phases 1–2.6 via Figma MCP; screenshots for report only — skip matrix push
+   prototype + reportOnly false → Phases 1–2.6 via capture scripts; upload_assets + Phase 4
+   prototype + reportOnly true  → Phases 1–2.6 via capture scripts; report embeds only (Figma-free)
+   both + reportOnly false → Figma matrix + prototype PNG overlay in Figma; Phases 1–2.6 on both
+   both + reportOnly true  → Run Figma + prototype captures; embed both in Cursor report — skip matrix push, upload_assets, Phase 4
 3. localePack?
    core            → 13 locales (fast)
    extended        → core + extended markets
@@ -129,9 +132,9 @@ Task Progress:
 4. All paths — Phase 2.5 font scaling on risk locales (or all if configured)
 5. All paths — Phase 2.6 post-scale a11y on scaled screenshots (contrast + touch — mandatory)
 6. Delegate flagged a11y to apca-compliance-figma + create-voice
-7. reportOnly?
-   true  → Cursor report with embedded screenshots only — skip Phase 4 and all upload_assets
-   false → push Figma full visual matrix after report
+7. reportOnly? (summary — details in step 2)
+   true  → Cursor report with embedded screenshots only — skip Phase 4 and all upload_assets / matrix push
+   false → push Figma full visual matrix after report (except prototype-only path uses upload_assets in Phase 1)
 ```
 
 ## Phase 1 — i18n stress
