@@ -134,7 +134,7 @@ elif localePack == "custom":
 | Resolved count | `len(locales) >= 1` after resolution | **STOP.** Do not emit empty matrix or mark workflow complete. |
 | Screen variants | `screenVariants` non-empty array | **STOP.** Ask user for at least one screen variant. |
 | Matrix size | `len(locales) × len(screenVariants) >= 1` | **STOP.** Report expected cell count before Phase 1. |
-| Figma targets | Required when Figma MCP will run — see **Figma target rules** below | **STOP.** Status `CONFIG_INVALID`. Ask for Figma URL or set `reportOnly: true` with `executionPath: "prototype"`. |
+| Figma targets | Required when Figma MCP will run — see **Figma target rules** below | **STOP.** Status `CONFIG_INVALID`. Ask for Figma URL, or use **Figma-free mode:** `executionPath: "prototype"` + `reportOnly: true` (Cursor report only — no Figma matrix or `upload_assets`). |
 | Project name | `projectName` must not be template default `Your Project Name` | **STOP.** Ask user for a real project name (used in report and Figma section title). |
 
 **Figma target rules** — validate `figmaFileKey` and `baselineNodeId` when **any** of:
@@ -142,7 +142,7 @@ elif localePack == "custom":
 - `executionPath` is `figma` or `both` (Phase 1 uses Figma MCP), **or**
 - `reportOnly` is `false` (Phase 4 push or matrix upload)
 
-Skip Figma target checks only when `executionPath` is `prototype` **and** `reportOnly` is `true`.
+Skip Figma target checks only when `executionPath` is `prototype` **and** `reportOnly` is `true` (**Figma-free mode** — prototype captures embed in Cursor report only; Phase 1 must not call `upload_assets`; Phase 4 skipped).
 
 **Rejected placeholder values** (non-exhaustive — treat any obvious template copy as invalid):
 

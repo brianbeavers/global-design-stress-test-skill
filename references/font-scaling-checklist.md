@@ -109,7 +109,7 @@ Run Small + Large for every locale — use only for release sign-off; warn user 
 
 1. Append `?fontScale=large` (or config param) to capture URL
 2. Capture screenshot per tier
-3. Upload to Font Scaling section via `upload_assets`
+3. Upload to Font Scaling section via `upload_assets` — **skip when `reportOnly: true`**; embed tiers in Cursor report only
 
 ## Report columns
 

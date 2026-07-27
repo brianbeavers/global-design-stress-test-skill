@@ -13,14 +13,16 @@ A completed cell includes:
 2. **Screenshot or Figma frame** of the full screen (not a cropped label)
 3. **PASS/FAIL badge** derived from what is visible, not inferred
 
-## Output channels (both required)
+## Output channels
 
-| Channel | Deliverable |
-|---------|-------------|
-| **Figma** | Full locale × screen matrix with real localized UI in every cell |
-| **Cursor chat** | Embedded screenshots for **every locale** + baseline; failures include side-by-side compare |
+| Channel | When required |
+|---------|----------------|
+| **Cursor chat** | Always — embedded screenshots for every locale × screen (default `embedScreenshotsInReport: true`) |
+| **Figma matrix** | When `reportOnly` is `false` (default) — full locale grid with translated UI |
 
-Phase 4 (Figma) and Phase 3 (report with images) are **both mandatory** unless the user explicitly requests `reportOnly: true` in config.
+When `reportOnly: true`, the **Cursor report is the sole visual deliverable**. Skip Figma matrix creation, `upload_assets`, and Phase 4 entirely. Prototype PNGs or Figma MCP screenshots still feed the report — they are not uploaded to Figma.
+
+When `reportOnly: false` (default), both Cursor embeds **and** Figma matrix are mandatory.
 
 ## Full matrix — all locales
 
@@ -60,10 +62,12 @@ When `executionPath` is `prototype` or `both`:
 1. If project has i18n copy bundles / scenario presets — use them
 2. If not — inject translations via documented hooks or temporary locale files the agent creates (tag `[MT]`)
 3. Capture PNG per locale × variant via Playwright or browser MCP
-4. Upload PNGs to Figma matrix via `upload_assets`
-5. Embed same PNGs in Cursor report
+4. **If `reportOnly` is `false`:** `upload_assets` → place PNGs in Figma matrix (requires valid `figmaFileKey`)
+5. **Always:** embed PNGs in Cursor report
 
-If no prototype exists, Figma path alone is sufficient — do not skip matrix.
+When `reportOnly` is `true`, **skip step 4** — prototype captures go to the Cursor report only. Do not call `upload_assets` or create a Figma matrix.
+
+If no prototype exists, Figma path alone is sufficient — do not skip matrix unless `reportOnly: true`.
 
 ## Failure comparison layout
 
@@ -105,7 +109,7 @@ For each risk locale (or all locales if `fontScaleSweepLocales: "all"`):
 1. Clone localized frame
 2. Scale text per [font-scaling-checklist.md](font-scaling-checklist.md)
 3. Screenshot Small / Default / Large tiers
-4. Place in Figma Font Scaling section
+4. Place in Figma Font Scaling section (skip when `reportOnly: true`)
 5. Embed failure tiers in Cursor report with side-by-side Default vs Large
 
 ## Accessibility visual evidence
@@ -127,18 +131,23 @@ After each locale frame or capture:
    No  → FAIL "incomplete translation" + fix before continuing
    Yes → evaluate layout/a11y checklist against screenshot
 4. Record PASS/FAIL + attach screenshot to report buffer
-5. Push frame to Figma matrix
+5. Push frame to Figma matrix — **skip when `reportOnly: true`**
 ```
 
 Do not advance to the next locale until step 3 passes for string visibility.
 
 ## Execution path matrix
 
-| Config | Figma matrix | Prototype PNGs | Cursor embeds |
-|--------|--------------|----------------|---------------|
-| `figma` | Required — translated clones | — | Screenshots from Figma MCP |
-| `prototype` | Required — uploaded PNGs | Required | Same PNGs embedded |
-| `both` | Required | Required | Both sources; flag discrepancies |
+| executionPath | reportOnly | Figma matrix | Prototype PNGs | Cursor embeds |
+|---------------|------------|--------------|----------------|---------------|
+| `figma` | `false` | Required — translated clones | — | Screenshots from Figma MCP |
+| `figma` | `true` | Skip — MCP capture for report only | — | Required (sole deliverable) |
+| `prototype` | `false` | Required — `upload_assets` PNGs | Required | Same PNGs embedded |
+| `prototype` | `true` | **Skip** — no `upload_assets` | Required | Required (sole deliverable) |
+| `both` | `false` | Required | Required | Both sources embedded |
+| `both` | `true` | Skip | Required | Required (sole deliverable) |
+
+**Figma-free mode:** `executionPath: "prototype"` + `reportOnly: true` — no `figmaFileKey`, no Phase 4, no `upload_assets`. Visual evidence lives in the Cursor report only.
 
 ## Anti-patterns (never ship)
 
@@ -148,7 +157,8 @@ Do not advance to the next locale until step 3 passes for string visibility.
 | Frame labels describe locale but UI is English | Placeholder — your reported issue |
 | PASS/FAIL table with no images | Tell without show |
 | Failures-only matrix | User asked for all locales |
-| Skipping Phase 4 | Figma is primary async deliverable |
+| Skipping Phase 4 when `reportOnly: false` | Figma is primary async deliverable |
+| Prototype + `reportOnly: true` but calling `upload_assets` | Contradicts Figma-free mode — report only |
 | "CTA probably clips in DE" without screenshot | Inference without evidence |
 
 ## Config
@@ -167,4 +177,4 @@ Do not advance to the next locale until step 3 passes for string visibility.
 | `visualEvidence` | `"full-matrix"` | All locales get visual cells |
 | `embedScreenshotsInReport` | `true` | Inline images in Cursor chat |
 | `failureComparisonBaseline` | `"en-US"` | Side-by-side compare locale |
-| `reportOnly` | `false` | Skip Figma only if explicitly true |
+| `reportOnly` | `false` | `true` = Cursor report only; skip Figma matrix, `upload_assets`, and Phase 4 |

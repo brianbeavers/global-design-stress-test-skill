@@ -53,8 +53,9 @@ The skill requires **visual proof** for every locale:
 
 - **All 13+ languages** get a screenshot / Figma frame — not failures only
 - **Real translated text** in the UI (machine translation OK, tagged `[MT]`)
-- **Cursor chat** embeds images; **Figma** gets the full matrix
+- **Cursor chat** embeds images; **Figma** gets the full matrix when `reportOnly: false` (default)
 - **Figma-only or prototype-only** projects both supported
+- **No Figma?** Use `executionPath: "prototype"` + `reportOnly: true` — Cursor report with embedded PNGs only
 
 See [references/visual-evidence-spec.md](references/visual-evidence-spec.md).
 
@@ -64,7 +65,7 @@ See [references/visual-evidence-spec.md](references/visual-evidence-spec.md).
 2. **Accessibility** — contrast, touch targets, focus order, localized screen reader copy
 3. **Font scaling** — small / default / large user settings (Dynamic Type, Android font size, web zoom)
 4. **Cursor report** — structured PASS/FAIL matrix with **embedded screenshots for every locale**
-5. **Figma push-back** — full visual matrix with **real translated UI** in every cell (not placeholder labels)
+5. **Figma push-back** — full visual matrix when `reportOnly: false`; skipped in Figma-free mode
 
 ## Install (Cursor)
 

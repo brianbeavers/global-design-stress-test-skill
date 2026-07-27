@@ -2,6 +2,12 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.5] — 2026-07-27
+
+### Fixed
+
+- **`reportOnly` + prototype consistency:** Figma-free mode (`executionPath: "prototype"`, `reportOnly: true`) no longer requires `upload_assets` or Figma matrix in Phase 1; visual-evidence spec and execution path matrix document Cursor-report-only deliverable
+
 ## [1.1.4] — 2026-07-27
 
 ### Fixed

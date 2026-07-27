@@ -2,6 +2,8 @@
 
 Structure and naming for Phase 4 Figma push-back.
 
+**Skip this entire spec when `reportOnly: true`** — visual evidence is Cursor-report-only; no Figma sections, matrix, or `upload_assets`.
+
 ## Show, don't tell
 
 Every matrix cell must contain **rendered localized UI** — not a label describing what the locale should show.
@@ -150,7 +152,7 @@ _Annotation / {Topic} — {optional scope}
 5. **Annotations**
    - `use_figma` — create `_Annotation` frames with findings text
 
-6. **Prototype uploads** (if `executionPath` prototype or both)
+6. **Prototype uploads** (if `executionPath` is `prototype` or `both` **and `reportOnly` is `false`**)
    - `upload_assets` with PNG captures
    - Place images in matrix cells via `use_figma`
 

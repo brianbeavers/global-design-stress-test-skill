@@ -23,7 +23,7 @@ Read [visual-evidence-spec.md](references/visual-evidence-spec.md) and [translat
 
 **Banned:** Figma sections with placeholder labels and English-only frames inside.
 
-Phase 4 (Figma) is **not optional** unless `reportOnly: true` in config.
+Phase 4 (Figma) is **not optional** unless `reportOnly: true` in config. When `reportOnly: true`, visual evidence is **Cursor-report-only** — no Figma matrix, no `upload_assets`, no Phase 4. Pair with `executionPath: "prototype"` when Figma is unavailable.
 
 ## Languages covered
 
@@ -66,7 +66,7 @@ Task Progress:
 - [ ] Phase 2.5: Font scaling (risk locales + failures)
 - [ ] Phase 2.6: Accessibility — post-scale (contrast, touch targets on scaled UI)
 - [ ] Phase 3: Emit Cursor report
-- [ ] Phase 4: Push Figma section + annotations
+- [ ] Phase 4: Push Figma section + annotations (skip if `reportOnly: true`)
 ```
 
 ## Phase 0 — Configuration
@@ -106,7 +106,7 @@ Task Progress:
 | `visualEvidence` | `"full-matrix"` (default) — visual cell for every locale × screen |
 | `embedScreenshotsInReport` | `true` (default) — inline images in Cursor chat |
 | `failureComparisonBaseline` | `"en-US"` — side-by-side compare for FAIL cells |
-| `reportOnly` | `false` — set `true` only to skip Figma push |
+| `reportOnly` | `false` — set `true` for Cursor-report-only (skip Figma matrix, `upload_assets`, Phase 4) |
 
 ## Hybrid execution decision tree
 
@@ -129,7 +129,9 @@ Task Progress:
 4. All paths — Phase 2.5 font scaling on risk locales (or all if configured)
 5. All paths — Phase 2.6 post-scale a11y on scaled screenshots (contrast + touch — mandatory)
 6. Delegate flagged a11y to apca-compliance-figma + create-voice
-7. Emit report **with embedded screenshots** → push Figma **full visual matrix**
+7. reportOnly?
+   true  → Cursor report with embedded screenshots only — skip Phase 4 and all upload_assets
+   false → push Figma full visual matrix after report
 ```
 
 ## Phase 1 — i18n stress
@@ -143,11 +145,11 @@ Follow [translation-workflow.md](references/translation-workflow.md) for string 
 1. `get_design_context` + `get_screenshot` on baseline node
 2. Build **string inventory** from baseline text nodes
 3. Translate inventory per locale (project copy or `[MT]`)
-4. `use_figma` — create output section; clone baseline per locale
+4. `use_figma` — create output section; clone baseline per locale (skip matrix push when `reportOnly: true` — capture screenshots for report only)
 5. **Set `characters` on text nodes** to translated strings — verify with `get_screenshot` that UI is not English
 6. RTL mirroring for `ar-*`; locale formats per locale-registry
-7. Push each cell to matrix; buffer screenshot for Cursor report
-8. FAIL cells: add side-by-side baseline compare frame
+7. Push each cell to matrix; buffer screenshot for Cursor report — **skip matrix push when `reportOnly: true`**
+8. FAIL cells: add side-by-side baseline compare frame — in report when `reportOnly: true`; in Figma when `reportOnly: false`
 
 ### Prototype path
 
@@ -156,10 +158,10 @@ When `executionPath` is `prototype` or `both`:
 1. Apply translations via scenario presets, copy bundles, or temporary `[MT]` locale files
 2. Capture PNG per locale × variant (Playwright or browser MCP)
 3. **Verify** PNG shows target language — reject English-only captures
-4. `upload_assets` → place in Figma matrix
-5. Embed same PNGs in Cursor report
+4. **If `reportOnly` is `false`:** `upload_assets` → place in Figma matrix (requires valid `figmaFileKey`)
+5. Embed PNGs in Cursor report (always — sole visual channel when `reportOnly: true`)
 
-If prototype unavailable, Figma path alone satisfies visual evidence.
+If prototype unavailable, Figma path alone satisfies visual evidence (unless `reportOnly: true` with no Figma — ask user for Figma URL or runnable prototype).
 
 Record PASS/FAIL per cell **from screenshot evidence**, not inference.
 
@@ -228,7 +230,7 @@ Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests pers
 
 ## Phase 4 — Figma push-back
 
-Follow [figma-output-spec.md](references/figma-output-spec.md). Skip only if `reportOnly: true`.
+Follow [figma-output-spec.md](references/figma-output-spec.md). **Skip entire phase** when `reportOnly: true` — do not call `upload_assets` or create Figma sections.
 
 ### MCP sequence
 
@@ -238,7 +240,7 @@ Follow [figma-output-spec.md](references/figma-output-spec.md). Skip only if `re
 4. Add failure comparison pairs (baseline | failing locale)
 5. Add a11y annotation sidecars with screenshot refs
 6. Add Font Scaling rows with Small / Large screenshots
-7. `upload_assets` — when prototype captures exist (`both` or `prototype`)
+7. `upload_assets` — when prototype captures exist (`both` or `prototype`) **and `reportOnly` is `false`**
 8. Return Figma section link; confirm no placeholder-only cells
 
 ### Frame naming
