@@ -2,6 +2,14 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.2] — 2026-07-27
+
+### Fixed
+
+- **Booking widget example:** Phase 2 table is scale-independent only; added Phase 2.6 post-scale contrast/touch sample
+- **Decision tree:** Figma and prototype paths now include Phase 2.6 (not 1–2.5 only)
+- **Cursor adapter:** install verification lists Phase 2.6
+
 ## [1.1.1] — 2026-07-27
 
 ### Fixed

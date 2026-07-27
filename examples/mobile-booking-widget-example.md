@@ -53,13 +53,15 @@ Save as `stress-test-config.json` in your project root.
 - RTL via `dir=rtl` on root container for `ar-*` locales
 - Batch capture script (Playwright or similar) driven by scenario URL params
 
-## Phase 2 — A11y (design-time sample)
+## Phase 2 — A11y (scale-independent sample)
 
-| Locale | Screen | Contrast | Touch | Focus | Voice | Status |
-|--------|--------|----------|-------|-------|-------|--------|
-| de-DE | widget | PASS | PASS | PASS | PARTIAL | PARTIAL |
-| ar-SA | discounts | PASS | PASS | FAIL | FAIL | FAIL |
-| ja-JP | calendar | PASS | PASS | PASS | PARTIAL | PARTIAL |
+Run **after Phase 1**, **before Phase 2.5**. Do not record Contrast or Touch here — those belong in Phase 2.6.
+
+| Locale | Screen | Focus | Voice | Status |
+|--------|--------|-------|-------|--------|
+| de-DE | widget | PASS | PARTIAL | PARTIAL |
+| ar-SA | discounts | FAIL | FAIL | FAIL |
+| ja-JP | calendar | PASS | PARTIAL | PARTIAL |
 
 **Typical findings:**
 
@@ -74,6 +76,22 @@ Save as `stress-test-config.json` in your project root.
 | ar-SA | widget | PASS | PASS | — |
 | ja-JP | calendar | PASS | PARTIAL | Long month header wraps |
 | en-US | widget | PASS | PASS | Baseline reference |
+
+## Phase 2.6 — A11y (post-scale sample)
+
+Run **after Phase 2.5** on scaled screenshots (Large tier minimum). Re-check Contrast and Touch only.
+
+| Locale | Screen | Scale | Contrast | Touch | Status |
+|--------|--------|-------|----------|-------|--------|
+| de-DE | widget | Large | PASS | FAIL | FAIL |
+| ar-SA | discounts | Large | PASS | FAIL | FAIL |
+| ja-JP | calendar | Large | PASS | PASS | PASS |
+| en-US | widget | Large | PASS | PASS | PASS |
+
+**Typical findings:**
+
+- de-DE widget at Large: CTA height fixed — touch target below 44pt after scale
+- ar-SA discounts at Large: dismiss control overlaps secondary action — touch FAIL
 
 ## Phase 3 — Report
 
@@ -104,4 +122,5 @@ Run global-design-stress-test on [Figma URL] using stress-test-config.json
 2. Start with `localePack: core` before `extended`
 3. Use `executionPath: figma` when no runnable prototype exists
 4. Always evaluate **DE + Large** worst-case combo
-5. Delegate contrast and voice specs to companion skills when available
+5. Run contrast and touch checks in **Phase 2.6** on scaled UI — not in Phase 2
+6. Delegate contrast and voice specs to companion skills when available

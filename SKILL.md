@@ -103,15 +103,15 @@ Task Progress:
 1. stress-test-config.json exists?
    No → create from template, gather inputs
 2. executionPath?
-   figma     → Phases 1–2.5 via Figma MCP (default)
-   prototype → require dev server + capture scripts
-   both      → Figma matrix + prototype PNG overlay
+   figma     → Phases 1–2.6 via Figma MCP (default)
+   prototype → Phases 1–2.6 via dev server + capture scripts
+   both      → Figma matrix + prototype PNG overlay; Phases 1–2.6 on both
 3. localePack?
    core            → 13 locales (fast)
    extended        → core + extended markets
    custom          → user-supplied list
-4. Phase 2.5 font scaling on risk locales (or all if configured)
-5. Phase 2.6 post-scale a11y on scaled screenshots (contrast + touch — do not skip)
+4. All paths — Phase 2.5 font scaling on risk locales (or all if configured)
+5. All paths — Phase 2.6 post-scale a11y on scaled screenshots (contrast + touch — mandatory)
 6. Delegate flagged a11y to apca-compliance-figma + create-voice
 7. Emit report **with embedded screenshots** → push Figma **full visual matrix**
 ```
