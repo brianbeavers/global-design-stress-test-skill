@@ -30,7 +30,7 @@ All notable changes to the global-design-stress-test skill.
 ### Changed
 
 - Removed proprietary / organization-specific references for open-source publication
-- Renamed locale pack `hertz-extended` → `extended`
+- Renamed extended locale pack identifier to `extended` for neutral OSS naming
 - Generalized example and install documentation
 
 ## [1.0.0] — 2026-07-24
