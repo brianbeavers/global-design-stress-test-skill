@@ -38,7 +38,7 @@ Two classes of Figma writes — do not conflate them:
 
 **Figma-only + `reportOnly: false` (default figma path):** Phases 1–2.6 **must** create evaluation clones via `use_figma` (swap localized text, scale tiers) and `get_screenshot` for PASS/FAIL — otherwise i18n, font scaling, and verification rules cannot be satisfied. Do **not** create `{outputSectionName}` until Phase 4.
 
-**Prototype/both + `reportOnly: false`:** localized screenshots come from prototype captures in Phases 1–2.6; Phase 4 builds official Figma section (+ `upload_assets` for buffered PNGs).
+**Prototype/both + `reportOnly: false`:** localized screenshots from prototype in Phases 1–2.6; optional Figma **evaluation clones** for cross-check when `both`; Phase 4 official section + `upload_assets` for buffered PNGs — **not** read-only.
 
 **Phase 1–2.6 never call `upload_assets`.** Official stakeholder section = Phase 4 only.
 

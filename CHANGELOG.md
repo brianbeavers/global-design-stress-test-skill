@@ -2,6 +2,12 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.2.4] — 2026-07-27
+
+### Fixed
+
+- **both + reportOnly false:** Phase 1 no longer describes read-only Figma — uses prototype captures + eval clones; Phase 4 matrix + PNG overlay
+
 ## [1.2.3] — 2026-07-27
 
 ### Fixed

@@ -190,7 +190,11 @@ Do not use this subsection when `executionPath` is `figma` alone — that combo 
 6. Buffer screenshots for Phases 2–3 report
 7. FAIL cells: side-by-side in report now; official comparison frames in **Phase 4** section
 
-**Prototype or both:** run **Prototype path** below for localized captures; optional read-only Figma baseline when `both` + `reportOnly: false`.
+**Prototype-only (`executionPath: "prototype"`):** run **Prototype path** below only.
+
+**Both + `reportOnly: false`:** run **Prototype path** for localized captures **and** use **evaluation clones** (same steps as figma-only) to cross-check layout in Figma; Phase 4 builds official matrix + overlays buffered prototype PNGs via `upload_assets` — **not** read-only.
+
+**Both + `reportOnly: true`:** use **Figma MCP — read-only** subsection above with **Prototype path** — do not use evaluation clones or this subsection.
 
 ### Prototype path
 
@@ -242,7 +246,7 @@ When `reportOnly: true`: scaled tiers via prototype or report comparison — **n
 
 When `reportOnly: false` + **figma-only:** clone from Phase 1 **evaluation frames**; scale text per [font-scaling-checklist.md](references/font-scaling-checklist.md); `get_screenshot` each tier — do not wait for Phase 4.
 
-When `reportOnly: false` + **prototype/both:** capture scaled tiers via prototype; buffer for report and Phase 4 Font Scaling section.
+When `reportOnly: false` + **both:** capture scaled tiers via prototype **and** optional eval-clone scaling in Figma for cross-check; buffer for report and Phase 4 Font Scaling section.
 
 ### Prototype path
 
