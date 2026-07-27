@@ -133,6 +133,8 @@ _Annotation / {Topic} — {optional scope}
 
 ## MCP operation sequence
 
+**Phase 4 only** (`reportOnly: false`). Phases 1–2.6 must not create sections or call `upload_assets` — see [visual-evidence-spec.md](visual-evidence-spec.md) Figma write policy.
+
 1. **Read baseline**
    - `get_design_context` with `fileKey`, `nodeId`
    - `get_screenshot` for visual reference
@@ -152,8 +154,9 @@ _Annotation / {Topic} — {optional scope}
 5. **Annotations**
    - `use_figma` — create `_Annotation` frames with findings text
 
-6. **Prototype uploads** (if `executionPath` is `prototype` or `both` **and `reportOnly` is `false`**)
-   - `upload_assets` with PNG captures
+6. **Prototype uploads** (if `executionPath` is `prototype` or `both`)
+   - Use PNGs **buffered from Phase 1/2.5** — do not re-capture
+   - `upload_assets` **after** steps 2–5 create section and matrix cell frames
    - Place images in matrix cells via `use_figma`
 
 7. **Return links**

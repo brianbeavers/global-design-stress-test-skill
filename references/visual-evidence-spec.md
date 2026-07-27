@@ -24,6 +24,17 @@ When `reportOnly: true`, the **Cursor report is the sole visual deliverable**. S
 
 When `reportOnly: false` (default), both Cursor embeds **and** Figma matrix are mandatory. Phase 3 report uses the full [report-template.md](report-template.md) including Figma deliverables.
 
+## Figma write policy (single source of truth)
+
+| Operation | Phases 1–2.6 | Phase 4 (`reportOnly: false` only) |
+|-----------|--------------|--------------------------------------|
+| `get_design_context` / `get_screenshot` | Allowed — read-only | Allowed |
+| `use_figma` — create `{outputSectionName}` section | **Never** | **Yes** — step 2 |
+| `use_figma` — clone, swap text, annotations | **`reportOnly: true` — never** | **`reportOnly: false` — yes** (official matrix) |
+| `upload_assets` | **Never** — buffer PNGs only | **Yes** — after section + matrix frames exist (prototype/both) |
+
+**Phase 1–2.6 = capture and evaluate.** **Phase 4 = sole Figma write phase** (when `reportOnly: false`). Prototype PNGs captured in Phase 1 are **buffered** and uploaded in Phase 4 — not before the section exists.
+
 ## Full matrix — all locales
 
 When `visualEvidence: "full-matrix"` (default):
@@ -44,16 +55,22 @@ Before swapping copy:
 
 ### Apply translations — Figma path
 
-For each locale row:
+**When `reportOnly: true` — read-only (no file mutations):**
 
-1. Clone baseline frame
-2. **Set `characters` on each text node** to the translated string — do not only rename the frame
-3. Apply RTL mirroring for `ar-*` (layout + directional icons)
-4. Apply locale formats (dates, times, numbers)
-5. `get_screenshot` on the frame — **verify** text is not still English
-6. If screenshot shows English fallback → mark **FAIL** (incomplete translation)
+1. `get_design_context` + `get_screenshot` on baseline — **do not call `use_figma`**
+2. Build string inventory; translate per locale
+3. Localized visual proof: use **prototype capture** (if `executionPath` is `prototype` or `both`) or mark layout cells **PARTIAL** with baseline screenshot + translated string list
+4. Buffer screenshots for Cursor report
 
-**Banned:** frames named `de-widget · FAIL` with English text inside.
+**When `reportOnly: false` — capture for report; official matrix in Phase 4:**
+
+1. `get_design_context` + `get_screenshot` on baseline
+2. Build string inventory; translate per locale
+3. Prefer **prototype captures** when `executionPath` is `prototype` or `both` — buffer PNGs; **no `upload_assets` in Phase 1**
+4. If **figma-only:** evaluate layout via string-inventory length heuristics + baseline screenshot in Phase 1; **defer all `use_figma` clones to Phase 4** (report embeds baseline + inventory until Phase 4 link returned)
+5. Buffer all screenshots for Phases 2–3 report embeds
+
+**Banned:** calling `use_figma` when `reportOnly: true`. Creating `{outputSectionName}` in Phase 1.
 
 ### Apply translations — Prototype path
 
@@ -62,10 +79,12 @@ When `executionPath` is `prototype` or `both`:
 1. If project has i18n copy bundles / scenario presets — use them
 2. If not — inject translations via documented hooks or temporary locale files the agent creates (tag `[MT]`)
 3. Capture PNG per locale × variant via Playwright or browser MCP
-4. **If `reportOnly` is `false`:** `upload_assets` → place PNGs in Figma matrix (requires valid `figmaFileKey`)
+4. **Buffer PNGs** in capture pool for Phase 4 — **do not call `upload_assets` in Phase 1**
 5. **Always:** embed PNGs in Cursor report
 
-When `reportOnly` is `true`, **skip step 4** — prototype captures go to the Cursor report only. Do not call `upload_assets` or create a Figma matrix.
+When `reportOnly: true`, prototype captures are the sole visual channel — still no Figma uploads.
+
+When `reportOnly: false`, Phase 4 uploads buffered PNGs **after** creating the stress-test section and matrix frames (see [figma-output-spec.md](figma-output-spec.md)).
 
 If no prototype exists, Figma path alone is sufficient — do not skip matrix unless `reportOnly: true`.
 
@@ -131,7 +150,7 @@ After each locale frame or capture:
    No  → FAIL "incomplete translation" + fix before continuing
    Yes → evaluate layout/a11y checklist against screenshot
 4. Record PASS/FAIL + attach screenshot to report buffer
-5. Push frame to Figma matrix — **skip when `reportOnly: true`**
+5. Push to Figma matrix — **Phase 4 only** when `reportOnly: false`; **never** in Phases 1–2.6
 ```
 
 Do not advance to the next locale until step 3 passes for string visibility.
@@ -141,8 +160,8 @@ Do not advance to the next locale until step 3 passes for string visibility.
 | executionPath | reportOnly | Figma matrix | Prototype PNGs | Cursor embeds |
 |---------------|------------|--------------|----------------|---------------|
 | `figma` | `false` | Required — translated clones | — | Screenshots from Figma MCP |
-| `figma` | `true` | Skip — MCP capture for report only | — | Required (sole deliverable) |
-| `prototype` | `false` | Required — `upload_assets` PNGs | Required | Same PNGs embedded |
+| `figma` | `true` | Skip — read-only MCP; no `use_figma` | — | Required (sole deliverable) |
+| `prototype` | `false` | Phase 4 — `upload_assets` PNGs | Required (buffered Phase 1) | Same PNGs embedded |
 | `prototype` | `true` | **Skip** — no `upload_assets` | Required | Required (sole deliverable) |
 | `both` | `false` | Required | Required | Both sources embedded |
 | `both` | `true` | Skip | Required | Required (sole deliverable) |
@@ -161,6 +180,8 @@ Do not advance to the next locale until step 3 passes for string visibility.
 | Failures-only matrix | User asked for all locales |
 | Skipping Phase 4 when `reportOnly: false` | Figma is primary async deliverable |
 | Prototype + `reportOnly: true` but calling `upload_assets` | Contradicts Figma-free mode — report only |
+| `use_figma` when `reportOnly: true` | Mutates Figma during Cursor-report-only run |
+| `upload_assets` in Phase 1 before Phase 4 section exists | Wrong order — buffer PNGs; upload in Phase 4 |
 | "CTA probably clips in DE" without screenshot | Inference without evidence |
 
 ## Config

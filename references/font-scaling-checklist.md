@@ -96,7 +96,9 @@ Run Small + Large for every locale — use only for release sign-off; warn user 
 
 ## Figma execution
 
-1. Clone locale frame from Phase 1
+**Phase 4 only** when `reportOnly: false`. Phase 2.5 captures scaled screenshots for the report; Phase 4 creates Font Scaling frames.
+
+1. Clone locale frame from Phase 4 i18n matrix
 2. Scale text nodes per platform table — **do not** auto-expand fixed parent frames
 3. Name: `FS — {Small|Large} · {Locale} · {Screen} · {PASS|FAIL}`
 4. Worst case: `FS — DE · Large · {Screen} · WORST CASE`
@@ -108,8 +110,8 @@ Run Small + Large for every locale — use only for release sign-off; warn user 
 ## Prototype execution
 
 1. Append `?fontScale=large` (or config param) to capture URL
-2. Capture screenshot per tier
-3. Upload to Font Scaling section via `upload_assets` — **skip when `reportOnly: true`**; embed tiers in Cursor report only
+2. Capture screenshot per tier; **buffer for Phase 4**
+3. Embed tiers in Cursor report — Phase 4 uploads to Font Scaling section when `reportOnly: false`
 
 ## Report columns
 

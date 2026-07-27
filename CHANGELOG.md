@@ -2,6 +2,13 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.8] — 2026-07-27
+
+### Fixed
+
+- **Figma write policy:** Phase 4 is sole Figma write phase; `reportOnly: true` forbids all `use_figma` in Phases 1–2.6
+- **Prototype uploads:** removed `upload_assets` from Phase 1 — buffer PNGs; Phase 4 uploads after section exists
+
 ## [1.1.7] — 2026-07-27
 
 ### Fixed

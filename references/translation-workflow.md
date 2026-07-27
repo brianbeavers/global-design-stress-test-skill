@@ -32,6 +32,8 @@ Right: button displays `"Jetzt buchen und sparen"`
 
 ## Step 3 — Figma text swap
 
+**Ownership:** Phase 4 only when `reportOnly: false`. **Never** call `use_figma` when `reportOnly: true`.
+
 Use `use_figma` with Plugin API:
 
 ```javascript

@@ -142,7 +142,7 @@ elif localePack == "custom":
 - `executionPath` is `figma` or `both` (Phase 1 uses Figma MCP), **or**
 - `reportOnly` is `false` (Phase 4 push or matrix upload)
 
-Skip Figma target checks only when `executionPath` is `prototype` **and** `reportOnly` is `true` (**Figma-free mode** — prototype captures embed in Cursor report only; Phase 1 must not call `upload_assets`; Phase 4 skipped).
+Skip Figma target checks only when `executionPath` is `prototype` **and** `reportOnly` is `true` (**Figma-free mode** — prototype captures embed in Cursor report only; no `use_figma`, no `upload_assets` in Phases 1–2.6; Phase 4 skipped).
 
 **Rejected placeholder values** (non-exhaustive — treat any obvious template copy as invalid):
 
