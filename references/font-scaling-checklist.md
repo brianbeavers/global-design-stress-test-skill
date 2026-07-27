@@ -96,9 +96,13 @@ Run Small + Large for every locale — use only for release sign-off; warn user 
 
 ## Figma execution
 
-**Phase 4 only** when `reportOnly: false`. Phase 2.5 captures scaled screenshots for the report; Phase 4 creates Font Scaling frames.
+Split by phase:
 
-1. Clone locale frame from Phase 4 i18n matrix
+**Phases 1–2.6 (figma-only + `reportOnly: false`):** clone from Phase 1 evaluation frame; scale text per platform table; `get_screenshot` each tier for report evidence — scratch frames, not official section.
+
+**Phase 4:** create official Font Scaling rows in `{outputSectionName}` — clone from eval frames or rebuild; add `_Annotation / Font scaling` sidecars.
+
+1. Clone locale frame from Phase 1 evaluation clone (or Phase 4 i18n matrix cell)
 2. Scale text nodes per platform table — **do not** auto-expand fixed parent frames
 3. Name: `FS — {Small|Large} · {Locale} · {Screen} · {PASS|FAIL}`
 4. Worst case: `FS — DE · Large · {Screen} · WORST CASE`

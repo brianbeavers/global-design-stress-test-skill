@@ -26,14 +26,21 @@ When `reportOnly: false` (default), both Cursor embeds **and** Figma matrix are 
 
 ## Figma write policy (single source of truth)
 
+Two classes of Figma writes — do not conflate them:
+
 | Operation | Phases 1–2.6 | Phase 4 (`reportOnly: false` only) |
 |-----------|--------------|--------------------------------------|
 | `get_design_context` / `get_screenshot` | Allowed — read-only | Allowed |
-| `use_figma` — create `{outputSectionName}` section | **Never** | **Yes** — step 2 |
-| `use_figma` — clone, swap text, annotations | **`reportOnly: true` — never** | **`reportOnly: false` — yes** (official matrix) |
-| `upload_assets` | **Never** — buffer PNGs only | **Yes** — after section + matrix frames exist (prototype/both) |
+| `use_figma` — create `{outputSectionName}` section | **Never** | **Yes** — official deliverable |
+| `use_figma` — **evaluation clones** (clone, swap text, scale for tiers) | **Yes** when `executionPath: "figma"` + `reportOnly: false` — scratch frames only, **not** in output section | Promote to official matrix or rebuild in section |
+| `use_figma` — any writes | **`reportOnly: true` — never** | Official matrix + annotations |
+| `upload_assets` | **Never** — buffer prototype PNGs only | **Yes** — after official section exists (prototype/both) |
 
-**Phase 1–2.6 = capture and evaluate.** **Phase 4 = sole Figma write phase** (when `reportOnly: false`). Prototype PNGs captured in Phase 1 are **buffered** and uploaded in Phase 4 — not before the section exists.
+**Figma-only + `reportOnly: false` (default figma path):** Phases 1–2.6 **must** create evaluation clones via `use_figma` (swap localized text, scale tiers) and `get_screenshot` for PASS/FAIL — otherwise i18n, font scaling, and verification rules cannot be satisfied. Do **not** create `{outputSectionName}` until Phase 4.
+
+**Prototype/both + `reportOnly: false`:** localized screenshots come from prototype captures in Phases 1–2.6; Phase 4 builds official Figma section (+ `upload_assets` for buffered PNGs).
+
+**Phase 1–2.6 never call `upload_assets`.** Official stakeholder section = Phase 4 only.
 
 ## Full matrix — all locales
 
@@ -62,15 +69,19 @@ Before swapping copy:
 3. Localized visual proof: use **prototype capture** (if `executionPath` is `prototype` or `both`) or mark layout cells **PARTIAL** with baseline screenshot + translated string list
 4. Buffer screenshots for Cursor report
 
-**When `reportOnly: false` — capture for report; official matrix in Phase 4:**
+**When `reportOnly: false` + `executionPath: "figma"` (figma-only) — evaluation clones in Phases 1–2.6:**
 
 1. `get_design_context` + `get_screenshot` on baseline
 2. Build string inventory; translate per locale
-3. Prefer **prototype captures** when `executionPath` is `prototype` or `both` — buffer PNGs; **no `upload_assets` in Phase 1**
-4. If **figma-only:** evaluate layout via string-inventory length heuristics + baseline screenshot in Phase 1; **defer all `use_figma` clones to Phase 4** (report embeds baseline + inventory until Phase 4 link returned)
-5. Buffer all screenshots for Phases 2–3 report embeds
+3. **`use_figma` — clone baseline per locale** into scratch/evaluation area (not `{outputSectionName}`)
+4. **Set `characters`** on text nodes; RTL + locale formats
+5. `get_screenshot` per cell — verify target language visible
+6. Buffer screenshots for Phases 2–3 report and Phase 2.5/2.6 checks
+7. Phase 4 promotes clones into official `{outputSectionName}` section
 
-**Banned:** calling `use_figma` when `reportOnly: true`. Creating `{outputSectionName}` in Phase 1.
+**When `reportOnly: false` + prototype or both** — prototype captures in Phase 1; Phase 4 official section + optional Figma clones
+
+**Banned:** `{outputSectionName}` in Phases 1–2.6. **`use_figma`** when `reportOnly: true`.
 
 ### Apply translations — Prototype path
 
@@ -150,7 +161,7 @@ After each locale frame or capture:
    No  → FAIL "incomplete translation" + fix before continuing
    Yes → evaluate layout/a11y checklist against screenshot
 4. Record PASS/FAIL + attach screenshot to report buffer
-5. Push to Figma matrix — **Phase 4 only** when `reportOnly: false`; **never** in Phases 1–2.6
+5. Push to **official** Figma matrix — **Phase 4 only** when `reportOnly: false`; evaluation scratch frames in 1–2.6 do not count as deliverable
 ```
 
 Do not advance to the next locale until step 3 passes for string visibility.
@@ -159,7 +170,7 @@ Do not advance to the next locale until step 3 passes for string visibility.
 
 | executionPath | reportOnly | Figma matrix | Prototype PNGs | Cursor embeds |
 |---------------|------------|--------------|----------------|---------------|
-| `figma` | `false` | Required — translated clones (Phase 4) | — | Screenshots from Figma MCP |
+| `figma` | `false` | Phase 4 official section; eval clones in 1–2.6 | — | Screenshots from eval clones |
 | `figma` | `true` | **INVALID** — blocked at Phase 0 | — | — |
 | `prototype` | `false` | Phase 4 — `upload_assets` PNGs | Required (buffered Phase 1) | Same PNGs embedded |
 | `prototype` | `true` | **Skip** — no `upload_assets` | Required | Required (sole deliverable) |

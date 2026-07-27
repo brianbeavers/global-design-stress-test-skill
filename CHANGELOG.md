@@ -2,6 +2,12 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.2.3] — 2026-07-27
+
+### Fixed
+
+- **Figma-only path:** Phases 1–2.6 use evaluation clones (`use_figma` scratch frames) for localized screenshots; Phase 4 creates official `{outputSectionName}` section — resolves contradiction with PASS/FAIL from screenshot evidence
+
 ## [1.2.2] — 2026-07-27
 
 ### Fixed

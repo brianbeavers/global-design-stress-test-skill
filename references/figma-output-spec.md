@@ -133,7 +133,7 @@ _Annotation / {Topic} — {optional scope}
 
 ## MCP operation sequence
 
-**Phase 4 only** (`reportOnly: false`). Phases 1–2.6 must not create sections or call `upload_assets` — see [visual-evidence-spec.md](visual-evidence-spec.md) Figma write policy.
+**Phase 4 only** (`reportOnly: false`). Phases 1–2.6: figma-only runs use **evaluation clones** (see visual-evidence-spec Figma write policy); never create `{outputSectionName}` or call `upload_assets` before Phase 4.
 
 1. **Read baseline**
    - `get_design_context` with `fileKey`, `nodeId`

@@ -157,7 +157,7 @@ Task Progress:
 6. Delegate flagged a11y to apca-compliance-figma + create-voice
 7. reportOnly? (summary — details in step 2; see Figma write policy in visual-evidence-spec)
    true  → Cursor report only — no use_figma, upload_assets, or Phase 4
-   false → Phase 4 is sole Figma write phase (section, clones, upload_assets for buffered PNGs)
+   false → Phase 4 creates official section; Phases 1–2.6 may use evaluation clones (figma-only) or prototype PNGs
 ```
 
 ## Phase 1 — i18n stress
@@ -178,15 +178,19 @@ When `executionPath` is `both` and `reportOnly` is `true`:
 
 Do not use this subsection when `executionPath` is `figma` alone — that combo is **CONFIG_INVALID** at Phase 0.
 
-### Figma path — `reportOnly: false` (capture; writes deferred to Phase 4)
+### Figma path — `reportOnly: false`
+
+**Figma-only (`executionPath: "figma"`):**
 
 1. `get_design_context` + `get_screenshot` on baseline node
-2. Build **string inventory** from baseline text nodes
-3. Translate inventory per locale (project copy or `[MT]`)
-4. Prefer **prototype captures** when `executionPath` is `prototype` or `both` — buffer PNGs; do not upload in Phase 1
-5. If **figma-only:** evaluate layout from inventory + baseline screenshot in Phase 1; defer `use_figma` clones to **Phase 4**
+2. Build **string inventory**; translate per locale (project copy or `[MT]`)
+3. **`use_figma` — evaluation clones:** clone baseline per locale × variant into a **scratch area** (not `{outputSectionName}`)
+4. **Set `characters`** on text nodes; RTL mirroring for `ar-*`; locale formats
+5. `get_screenshot` each cell — verify UI is not English; record PASS/FAIL from screenshot evidence
 6. Buffer screenshots for Phases 2–3 report
-7. FAIL cells: side-by-side in report; Figma comparison frames in **Phase 4**
+7. FAIL cells: side-by-side in report now; official comparison frames in **Phase 4** section
+
+**Prototype or both:** run **Prototype path** below for localized captures; optional read-only Figma baseline when `both` + `reportOnly: false`.
 
 ### Prototype path
 
@@ -232,11 +236,13 @@ See [font-scaling-checklist.md](references/font-scaling-checklist.md) for platfo
 3. **Large** on every locale that failed Phase 1 layout
 4. Explicit combo frame: `DE · Large · {screen}` (worst case)
 
-### Figma path
+### Figma path (Phase 2.5)
 
-When `reportOnly: true`: capture scaled tiers via prototype or baseline comparison in report — **no `use_figma`**.
+When `reportOnly: true`: scaled tiers via prototype or report comparison — **no `use_figma`**.
 
-When `reportOnly: false`: capture via prototype or `get_screenshot`; defer Figma font-scaling frames to **Phase 4**.
+When `reportOnly: false` + **figma-only:** clone from Phase 1 **evaluation frames**; scale text per [font-scaling-checklist.md](references/font-scaling-checklist.md); `get_screenshot` each tier — do not wait for Phase 4.
+
+When `reportOnly: false` + **prototype/both:** capture scaled tiers via prototype; buffer for report and Phase 4 Font Scaling section.
 
 ### Prototype path
 
@@ -284,13 +290,13 @@ Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests pers
 
 ## Phase 4 — Figma push-back
 
-Follow [figma-output-spec.md](references/figma-output-spec.md). **Skip entire phase** when `reportOnly: true`. **Sole Figma write phase** when `reportOnly: false` — all `use_figma` matrix work and `upload_assets` happen here, not in Phase 1.
+Follow [figma-output-spec.md](references/figma-output-spec.md). **Skip entire phase** when `reportOnly: true`. When `reportOnly: false`: create **official** `{outputSectionName}` section; promote or rebuild from Phase 1–2.6 evaluation clones (figma-only) and/or `upload_assets` prototype PNGs.
 
 ### MCP sequence
 
 1. `get_design_context` + `get_screenshot` on baseline
-2. `use_figma` — create section `{outputSectionName} — {date}`
-3. Build **full** i18n matrix — clone baseline per locale; **set `characters`** on text nodes; RTL + locale formats
+2. `use_figma` — create official section `{outputSectionName} — {date}`
+3. Build **full** i18n matrix in section — from evaluation clones (figma-only) or new clones + prototype PNGs
 4. Add failure comparison pairs (baseline | failing locale)
 5. Add a11y annotation sidecars with screenshot refs
 6. Add Font Scaling rows with Small / Large screenshots (clone + scale per font-scaling-checklist)
