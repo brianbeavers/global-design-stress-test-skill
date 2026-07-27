@@ -7,6 +7,14 @@ description: Stress-tests UI designs for internationalization and design-time ac
 
 Orchestrates i18n layout stress, design-time accessibility, and font scaling across locales. Delivers a structured Cursor report **with embedded screenshots** and pushes a **full visual matrix** back to Figma.
 
+## Quick start (users)
+
+1. Copy `stress-test-config.template.json` → `stress-test-config.json` and fill in project name, Figma URL, screen variants.
+2. In Cursor: `Run global-design-stress-test on [Figma URL]`
+3. Read the report **top-down**: action items (P0/P1) → failure screenshots → matrix appendix.
+
+Full guide: [references/quick-start.md](references/quick-start.md) · Reading results: [references/how-to-read-results.md](references/how-to-read-results.md)
+
 ## Show, don't tell (mandatory)
 
 Every run must **show** translated and accessibility-stressed UI — not only PASS/FAIL prose.
@@ -45,7 +53,10 @@ Read these reference files when executing (do not duplicate their content here):
 | [i18n-checklist.md](references/i18n-checklist.md) | Phase 1 pass/fail |
 | [a11y-checklist.md](references/a11y-checklist.md) | Phase 2 + Phase 2.6 pass/fail |
 | [font-scaling-checklist.md](references/font-scaling-checklist.md) | Phase 2.5 pass/fail |
-| [report-template.md](references/report-template.md) | Phase 3 output |
+| [report-template.md](references/report-template.md) | Phase 3 stakeholder report |
+| [report-agent-guide.md](references/report-agent-guide.md) | **Agents** — branching, severity, DRAFT/FINAL (do not paste into report) |
+| [how-to-read-results.md](references/how-to-read-results.md) | Share with stakeholders — priority levels, matrix columns |
+| [quick-start.md](references/quick-start.md) | Minimal run instructions |
 | [figma-output-spec.md](references/figma-output-spec.md) | Phase 4 Figma push |
 
 **Specialist skills** (read and delegate when flagged):
@@ -65,8 +76,8 @@ Task Progress:
 - [ ] Phase 2: Accessibility — scale-independent (focus, voice, non-color, RTL)
 - [ ] Phase 2.5: Font scaling (risk locales + failures)
 - [ ] Phase 2.6: Accessibility — post-scale (contrast, touch targets on scaled UI)
-- [ ] Phase 3: Emit Cursor report
-- [ ] Phase 4: Push Figma section + annotations (skip if `reportOnly: true`)
+- [ ] Phase 3: Emit stakeholder report (see report-agent-guide)
+- [ ] Phase 4: Push Figma section (skip if `reportOnly: true`) → mark report **FINAL**
 ```
 
 ## Phase 0 — Configuration
@@ -140,8 +151,6 @@ Task Progress:
 ## Phase 1 — i18n stress
 
 For each **locale × screen variant** in config, evaluate against [i18n-checklist.md](references/i18n-checklist.md).
-
-Follow [translation-workflow.md](references/translation-workflow.md) for string inventory and swap. Follow [visual-evidence-spec.md](references/visual-evidence-spec.md) for screenshots.
 
 Follow [translation-workflow.md](references/translation-workflow.md) for string inventory and swap. Follow [visual-evidence-spec.md](references/visual-evidence-spec.md) for screenshots and **Figma write policy** — Phases 1–2.6 never call `upload_assets`; Phase 4 is the sole Figma write phase when `reportOnly: false`.
 
@@ -237,16 +246,26 @@ Rules:
 
 ## Phase 3 — Cursor report
 
-Fill [report-template.md](references/report-template.md) and post in chat.
+Read [report-agent-guide.md](references/report-agent-guide.md) first. Fill [report-template.md](references/report-template.md) for stakeholders — **no agent comments, branching tables, or placeholder URLs in the pasted report**.
 
-**Branch on `reportOnly`:**
+### Delivery order
 
-- **`reportOnly: false` (default):** include Figma baseline link, per-cell Figma frame refs, **Figma deliverables** section, and Figma sign-off item
-- **`reportOnly: true`:** Cursor-report-only — **omit** Figma baseline, Figma frame bullets, entire **Figma deliverables** section, and "Figma section link" sign-off; do not use placeholder `{url}` values
+| `reportOnly` | When to post | Status banner |
+|--------------|--------------|---------------|
+| `true` | After Phase 3 | **FINAL** — Cursor report only |
+| `false` | **Prefer after Phase 4** (one message) | **FINAL** + Figma link |
+| `false` (early share ok) | After Phase 3, update after Phase 4 | **DRAFT** → then **FINAL** addendum with Figma link |
 
-**Required:** embed screenshots for **every locale × screen** when `embedScreenshotsInReport` is true (default). FAIL cells include baseline side-by-side tables per [visual-evidence-spec.md](references/visual-evidence-spec.md).
+### Required content
 
-Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests persistence (include image paths or links).
+1. **Action items table** — every FAIL/PARTIAL with P0/P1/P2, owner, recommended fix (see report-agent-guide severity rules)
+2. **Failures — visual evidence** — screenshots for FAIL/PARTIAL cells (PASS cells in matrix appendix unless `full-matrix` embed required)
+3. **Matrix appendix** — all locales
+4. **Figma deliverables** — only when `reportOnly: false` and Phase 4 complete
+
+Point stakeholders to [how-to-read-results.md](references/how-to-read-results.md).
+
+Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests persistence.
 
 ## Phase 4 — Figma push-back
 
@@ -261,7 +280,7 @@ Follow [figma-output-spec.md](references/figma-output-spec.md). **Skip entire ph
 5. Add a11y annotation sidecars with screenshot refs
 6. Add Font Scaling rows with Small / Large screenshots (clone + scale per font-scaling-checklist)
 7. `upload_assets` — place **buffered prototype PNGs** from Phase 1/2.5 into matrix cells (`prototype` or `both` only; section must exist first)
-8. Return Figma section link; confirm no placeholder-only cells
+8. Return Figma section link; update report to **FINAL** status with link in header and Figma deliverables table
 
 ### Frame naming
 

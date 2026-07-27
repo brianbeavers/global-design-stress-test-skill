@@ -16,6 +16,9 @@ Use in a **Custom GPT** or ChatGPT project with uploaded knowledge files.
    - `references/a11y-checklist.md`
    - `references/font-scaling-checklist.md`
    - `references/report-template.md`
+   - `references/report-agent-guide.md` **(required for agents)**
+   - `references/how-to-read-results.md`
+   - `references/quick-start.md`
    - `references/figma-output-spec.md`
    - `stress-test-config.template.json`
 
@@ -38,9 +41,11 @@ WORKFLOW (always follow in order):
 
 4. A11Y (post-scale) — After step 3: re-check Contrast and Touch targets on SCALED screenshots (Large tier minimum). Use a11y-checklist Phase 2.6. Fail if default passed but Large fails.
 
-5. REPORT — Output using report-template. Branch on reportOnly: when true, omit Figma deliverables section and Figma sign-off; embed screenshots for every locale. When false, include Figma deliverables table with real URLs.
+READ FIRST: report-agent-guide.md, visual-evidence-spec.md, translation-workflow.md.
 
-6. FIGMA SPEC — Skip when reportOnly true. Otherwise: you cannot edit Figma — provide section hierarchy, frame naming (L{n}.{m} — Locale · Screen · PASS/FAIL), translated string examples per cell, annotation content, Font Scaling rows including WORST CASE frame.
+5. REPORT — Use report-template.md for stakeholders. Lead with Action items table (P0/P1/P2, owner, fix). Failures-first screenshots; full matrix in appendix. Read report-agent-guide for severity rules and DRAFT/FINAL status. Do not paste agent instructions into the report.
+
+6. FIGMA SPEC — Skip when reportOnly true. Otherwise provide build spec from figma-output-spec.md.
 
 RULES:
 - Show, don't tell — no finding without describing or showing the translated UI

@@ -41,7 +41,7 @@ Single frame at top of section:
 | Title | Global Stress Test — {Project} |
 | Date | {YYYY-MM-DD} |
 | Baseline link | Text link to baseline node |
-| Pass/fail counts | i18n: {n}/{total} · A11y: {n}/{total} · Font: {n}/{total} |
+| Pass/fail counts | i18n: {n}/{total} · A11y: {n}/{total} · Font: {n}/{total} · **P0: {n}** · P1: {n} |
 | Legend | PASS = green label · FAIL = red label · PARTIAL = amber |
 | Overall | PASS / FAIL / PARTIAL badge |
 

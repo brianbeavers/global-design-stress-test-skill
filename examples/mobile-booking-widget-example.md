@@ -95,11 +95,11 @@ Run **after Phase 2.5** on scaled screenshots (Large tier minimum). Re-check Con
 
 ## Phase 3 — Report
 
-Persist optional markdown report:
+Use [report-template.md](../references/report-template.md). Stakeholders read **Action items** first, then failure screenshots, then matrix appendix.
 
-`docs/global-stress-test-{YYYY-MM-DD}.md`
+Example action item: `P0 · de-DE · widget · Font scaling · CTA clips at Large → min-height 48pt (Design+Eng)`
 
-Use [report-template.md](../references/report-template.md).
+See [how-to-read-results.md](../references/how-to-read-results.md).
 
 ## Phase 4 — Figma
 

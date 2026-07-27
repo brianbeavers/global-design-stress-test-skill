@@ -37,6 +37,8 @@ Run global-design-stress-test on [Figma URL]
 
 Triggers: *i18n stress test*, *font scaling*, *RTL layout*, *multilingual matrix*.
 
+**Output:** report with **P0/P1 action items** at the top, then failure screenshots. Share [how-to-read-results.md](references/how-to-read-results.md) with stakeholders.
+
 ## MCP requirements
 
 - Figma MCP connected in Cursor

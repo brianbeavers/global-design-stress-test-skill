@@ -28,9 +28,9 @@ Phase 2.5 — Font scaling: Test Small/Large on risk locales (de-DE, ar-SA, ja-J
 
 Phase 2.6 — a11y (post-scale): Re-check Contrast and Touch on scaled screenshots using a11y-checklist Phase 2.6. Required before final PASS.
 
-Phase 3: Output report using report-template.md — branch on reportOnly (omit Figma deliverables when true). Visual evidence section for every locale.
+Phase 3: Read report-agent-guide.md. Output report-template.md — Action items (P0/P1/P2) first, failures with screenshots, matrix appendix. Assign severity and owner on every FAIL. Status FINAL or DRAFT per report-agent-guide.
 
-Phase 4 (manual): Describe Figma section structure from figma-output-spec.md. You cannot write to Figma without MCP — provide frame names, grid layout, and annotation content for the designer to place.
+Phase 4 (manual): Describe Figma section from figma-output-spec.md when reportOnly false.
 
 Locale packs: core (13), extended (30), custom.
 

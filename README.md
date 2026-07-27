@@ -2,6 +2,30 @@
 
 A portable **Cursor Agent Skill** (and multi-LLM workflow) for stress-testing UI designs against **internationalization**, **design-time accessibility**, and **font scaling** across **13 core languages** (30 locales in the extended pack).
 
+## Quick start
+
+1. **Install:** `git clone https://github.com/brianbeavers/global-design-stress-test-skill.git ~/.cursor/skills/global-design-stress-test`
+2. **Configure:** copy `stress-test-config.template.json` → `stress-test-config.json` (project name, Figma URL, screen variants)
+3. **Run:** `Run global-design-stress-test on [Figma URL]`
+4. **Read results:** open the report → **Action items (P0/P1)** first → failure screenshots → matrix appendix
+
+Guides: [quick-start.md](references/quick-start.md) · [how-to-read-results.md](references/how-to-read-results.md)
+
+## Understanding the output
+
+Every run produces a **stakeholder report** structured for action:
+
+| Section | Who it's for | What you get |
+|---------|--------------|--------------|
+| **Action items** | Everyone | P0/P1/P2 fixes with owner and recommended action |
+| **Failures — visual evidence** | Design, QA | Screenshots of what broke |
+| **Matrix appendix** | QA, eng | Full PASS/FAIL grid |
+| **Figma deliverables** | Design | Linked visual matrix (when not report-only) |
+
+**P0** = ship blocker · **P1** = fix before launch · **P2** = polish
+
+Report status: **FINAL** (safe to share) or **DRAFT** (Figma matrix still pending).
+
 ## Languages stress-tested
 
 Every run evaluates your design against localized copy, layout, RTL, date/time formats, and font scaling. The **core pack** (default) covers **13 languages**:
@@ -109,6 +133,8 @@ Run global-design-stress-test on [Figma URL] using stress-test-config.json
 
 Or mention: *i18n stress test*, *font scaling QA*, *RTL layout check*, *multilingual matrix*.
 
+**Tip:** You do not need to know the phase list — the skill runs Phases 0–4 automatically. Your report arrives with **action items at the top**.
+
 ## Locale packs
 
 | Pack | Languages / locales | Use when |
@@ -166,6 +192,11 @@ global-design-stress-test-skill/
 ├── SKILL.md
 ├── stress-test-config.template.json
 ├── references/
+│   ├── quick-start.md          ← start here (users)
+│   ├── how-to-read-results.md  ← reading the report (stakeholders)
+│   ├── report-template.md      ← report output shape
+│   ├── report-agent-guide.md   ← agents only
+│   └── …
 ├── examples/
 ├── adapters/
 └── README.md

@@ -2,6 +2,22 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.2.0] — 2026-07-27
+
+### Added — usability
+
+- **Action-first report** — P0/P1/P2 action items table with owner and recommended fix
+- **Failures-first visual evidence** — full PASS grid moved to matrix appendix
+- **report-agent-guide.md** — agent branching separated from stakeholder report
+- **how-to-read-results.md** — guide for designers, PMs, engineers, QA
+- **quick-start.md** — minimal 3-step run instructions
+- **DRAFT / FINAL** report status for figma runs (Phase 4 pending vs complete)
+
+### Changed
+
+- **report-template.md** — rewritten for clarity; no agent comments in deliverable
+- README, SKILL, adapters updated for easier invoke and output reading
+
 ## [1.1.8] — 2026-07-27
 
 ### Fixed

@@ -1,28 +1,36 @@
 # Global Design Stress Test — {Project}
 
-**Date:** {YYYY-MM-DD}  
-**Locale pack:** {core | extended | custom}  
-**Platform:** {ios | android | web}  
-**Execution path:** {figma | prototype | both}  
-**Report mode:** {reportOnly ? `Cursor-report-only (Figma-free)` : `Cursor + Figma`}
-
-<!-- Agent: branch this template on config.reportOnly — see "Template branching" below -->
-
-**Figma baseline:** {include only when `reportOnly` is `false`}  
-[{baselineNodeId}](https://www.figma.com/design/{fileKey}/?node-id={nodeIdHyphen})
-
-**Design reference:** {include when `reportOnly` is `true` — prototype URL, screenshot bundle, or "captured via browser MCP"}
+> **Report status:** {FINAL | DRAFT — Figma matrix pending}  
+> **Overall result:** {PASS | FAIL | PARTIAL}  
+> **Run date:** {YYYY-MM-DD} · **Platform:** {ios | android | web} · **Locales:** {n} · **Screens:** {m}  
+> **Report mode:** {Cursor + Figma | Cursor only (no Figma)}  
+> **Figma matrix:** {link or N/A} · **Design reference:** {baseline link or prototype URL}
 
 ---
 
-## Template branching (agents — do not paste into stakeholder report)
+## Start here — action items
 
-| `reportOnly` | Include in report | Omit / mark N/A |
-|--------------|-------------------|-----------------|
-| `false` (default) | Figma baseline link, per-cell Figma frame refs, **Figma deliverables** section, Figma sign-off item | — |
-| `true` | Embedded screenshots for every locale, matrix, findings, font scaling summary | Figma baseline, Figma frame refs, **Figma deliverables** section, "Figma section link" sign-off |
+Fix these first. Sorted by priority (P0 → P1 → P2).
 
-When `reportOnly: true`, the Cursor report **is** the deliverable. Do not insert placeholder Figma URLs (`{url}`).
+| Priority | Locale | Screen | Category | Issue | Recommended fix | Owner |
+|----------|--------|--------|----------|-------|-----------------|-------|
+| P0 | de-DE | widget | Font scaling | Primary CTA clips at Large font | Set min-height 48pt; allow 2-line wrap | Design+Eng |
+| P0 | ar-SA | discounts | RTL / Focus | Dismiss control last in focus order | Mirror sheet; dismiss first in RTL tab order | Eng |
+| P1 | ja-JP | calendar | i18n | Month header wraps to 3 lines | Shorten label or increase header height | Design |
+| … | … | … | … | … | … | … |
+
+**Counts:** {p0} P0 · {p1} P1 · {p2} P2 · {pass} PASS cells
+
+If this table is empty, overall status is **PASS** — see appendix for full matrix.
+
+---
+
+## How to read this report
+
+- **P0** = ship blocker · **P1** = fix before launch · **P2** = polish / content
+- **Contrast@Scale** and **Touch@Scale** = checked at **large font**, not default size only
+- Full locale grid (including PASS) is in the **Matrix appendix** below
+- Detail guide: [how-to-read-results.md](how-to-read-results.md)
 
 ---
 
@@ -30,137 +38,87 @@ When `reportOnly: true`, the Cursor report **is** the deliverable. Do not insert
 
 | Metric | Value |
 |--------|-------|
-| Locales tested | {n} |
-| Screen variants | {m} |
-| Total cells | {n × m} |
-| Overall status | **PASS** / **FAIL** / **PARTIAL** |
+| Total cells tested | {n × m} |
+| Overall status | **{PASS | FAIL | PARTIAL}** |
 | i18n pass rate | {x}% |
-| A11y pass rate | {y}% |
-| Font scale pass rate | {z}% |
+| Accessibility pass rate | {y}% |
+| Font scaling pass rate | {z}% |
 
-### Top 3 risks
+### Top risks (narrative)
 
-1. {risk 1 — with link to visual evidence section below}
-2. {risk 2}
-3. {risk 3}
+1. {One sentence — e.g. German + Large breaks primary CTA across widget and sheet}
+2. {One sentence — e.g. Arabic discounts sheet RTL focus order blocks keyboard users}
+3. {One sentence — e.g. Machine-translated Polish strings need content review}
 
 ---
 
-## Visual evidence — all locales
+## Failures — visual evidence
 
-Embed screenshots for **every** locale × screen. Do not list FAIL-only.
+Screenshots for **FAIL** and **PARTIAL** cells only. Each item maps to a row in **Action items** above.
 
-### {locale} · {screen} · {PASS|FAIL|PARTIAL}
+### {locale} · {screen} · {FAIL | PARTIAL} · {P0 | P1 | P2}
 
 | Baseline ({failureComparisonBaseline}) | {locale} |
 |----------------------------------------|----------|
-| ![baseline-{locale}-{screen}](path-or-embed) | ![{locale}-{screen}](path-or-embed) |
+| ![baseline](embed-or-path) | ![locale](embed-or-path) |
 
-- **Strings swapped:** {list key strings: EN → target, tag [MT] if machine-translated}
-- **Defect (if FAIL):** {visible issue — clip, overlap, RTL break, English fallback}
-- **Figma frame:** {link or node id — **omit this bullet when `reportOnly: true`**}
-
-Repeat for each locale × screen in the matrix.
-
----
-
-## Matrix
-
-| Locale | Screen | i18n Layout | RTL | Formats | Font Small | Font Large | Contrast@Scale | Touch@Scale | Focus | Voice | Status |
-|--------|--------|-------------|-----|---------|------------|------------|----------|-------|-------|-------|--------|
-| de-DE | widget | PASS | — | PASS | PASS | FAIL | PASS | PASS | PASS | SKIP | **FAIL** |
-| ar-SA | discounts | PASS | PASS | PASS | PASS | PASS | PASS | FAIL | FAIL | PARTIAL | **FAIL** |
-| … | … | … | … | … | … | … | … | … | … | … | … |
-
-**Legend:** PASS | FAIL | PARTIAL | SKIP | — (not applicable)
-
-### Worst-case combo
-
-| Combo | Screen | Status | Notes |
-|-------|--------|--------|-------|
-| DE · Large | widget | FAIL | CTA clips at 3 lines |
-
----
-
-## Critical findings (must fix)
-
-1. **[{locale}] [{screen}]** {category}: {observation} → {recommendation}
-2. …
-
----
-
-## Recommendations
-
-1. {Prioritized fix with design + eng owner if known}
-2. …
+- **Category:** {i18n | RTL | Font scaling | Contrast | Touch | Focus | Voice | Formats}
+- **What broke:** {visible defect — clip, overlap, English fallback, contrast pair}
+- **Strings:** {EN → target, tag [MT] if machine-translated}
+- **Figma frame:** {link — omit when report mode is Cursor only}
 
 ---
 
 ## Font scaling summary
 
-| Tier | Locales tested | Pass | Fail |
-|------|----------------|------|------|
-| Small | {risk set} | {n} | {n} |
-| Large | {risk set + failures} | {n} | {n} |
-| DE+Large combo | widget | {PASS/FAIL} | {notes} |
+| Tier | Locales tested | Pass | Fail | Notes |
+|------|----------------|------|------|-------|
+| Small | {risk set} | {n} | {n} | |
+| Large | {risk set + failures} | {n} | {n} | |
+| **DE + Large (worst case)** | {screen} | {PASS/FAIL} | — | {one-line note} |
 
 ---
 
-## A11y delegation notes
+## Matrix appendix (all locales)
 
-<!-- When reportOnly: true — describe findings in prose; reference embedded screenshots, not Figma frame names -->
+| Locale | Screen | i18n | RTL | Formats | Font S | Font L | Contrast* | Touch* | Focus | Voice | Status |
+|--------|--------|------|-----|---------|--------|--------|-----------|--------|-------|-------|--------|
+| de-DE | widget | PASS | — | PASS | PASS | FAIL | PASS | PASS | PASS | PARTIAL | **FAIL** |
+| ar-SA | discounts | PASS | PASS | PASS | PASS | PASS | PASS | FAIL | FAIL | FAIL | **FAIL** |
+| en-US | widget | PASS | — | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| … | … | … | … | … | … | … | … | … | … | … | … |
 
-**When `reportOnly: false`:**
+\* Contrast and Touch evaluated at **scaled** UI (Phase 2.6).
 
-| Skill invoked | Scope | Output |
-|---------------|-------|--------|
-| apca-compliance-figma | {token pairs flagged} | `_Annotation / Contrast failures` |
-| create-voice | de-DE, ar-SA, ja-JP | `{Component} Screen reader — {locale}` frames |
-
-**When `reportOnly: true`:**
-
-| Skill invoked | Scope | Output |
-|---------------|-------|--------|
-| apca-compliance-figma | {token pairs flagged} | Contrast notes in report + screenshot refs |
-| create-voice | de-DE, ar-SA, ja-JP | Localized voice copy in report (no Figma frames) |
+**Legend:** PASS · FAIL · PARTIAL · SKIP · — (n/a)
 
 ---
 
 ## Figma deliverables
 
-<!-- **Omit this entire section when `reportOnly: true`** — do not leave placeholder URLs -->
+{Include this section only when report mode is Cursor + Figma. Omit entirely for Cursor-only runs.}
 
 | Section | Link | Frames |
 |---------|------|--------|
 | Summary | {url} | 1 |
 | i18n Matrix | {url} | {locales × variants} |
-| Font Scaling | {url} | {small + large rows} |
-| A11y Annotations | {url} | {annotation count} |
-| Edge cases | {url} | {DE+Large, mixed-script, …} |
+| Font Scaling | {url} | {tiers × risk locales} |
+| A11y Annotations | {url} | {count} |
+| Edge cases | {url} | DE+Large, mixed-script, … |
 
 ---
 
-## Sign-off checklist
+## Sign-off
 
-**Always:**
-
-- [ ] All FAIL cells have findings with recommendations
-- [ ] DE+Large worst-case evaluated
-- [ ] RTL locales have focus order documented
-- [ ] Embedded screenshots for **every** locale × screen in this report
-- [ ] Optional: persisted to `docs/global-stress-test-{date}.md`
-
-**When `reportOnly: false` only:**
-
-- [ ] Figma section link returned to stakeholder
-
-**When `reportOnly: true` only:**
-
-- [ ] Confirmed: no Figma deliverables section in this report (Cursor-report-only run)
-- [ ] Prototype or capture source documented in header
+- [ ] P0 action items documented with owners
+- [ ] DE + Large worst-case reviewed
+- [ ] RTL locales have focus order noted (if applicable)
+- [ ] FAIL/PARTIAL cells have screenshots
+- [ ] Report status is **FINAL** before external share
+- [ ] Figma matrix link shared (Cursor + Figma mode only)
 
 ---
 
 ## Out of scope (this run)
 
-- {List anything skipped: runtime axe, XL tier, custom locales, Figma push when reportOnly, …}
+- {runtime axe/browser audits, XL font tier, locales skipped, …}
