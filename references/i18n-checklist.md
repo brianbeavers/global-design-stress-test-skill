@@ -2,6 +2,8 @@
 
 Pass/fail criteria for Phase 1. Evaluate each **locale × screen variant** cell.
 
+**Visual evidence required:** Every cell needs a screenshot or Figma frame showing **actual translated strings** in the UI. See [visual-evidence-spec.md](visual-evidence-spec.md). English-only frames → automatic **FAIL** (incomplete translation).
+
 ## Layout and copy
 
 | Check | Pass | Fail |

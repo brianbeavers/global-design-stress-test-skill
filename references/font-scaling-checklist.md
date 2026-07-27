@@ -2,6 +2,8 @@
 
 Pass/fail criteria for Phase 2.5. Run **after** i18n string swap so worst case = **longest locale + largest scale**.
 
+Every font-scale tier requires a **screenshot** showing scaled text in the UI. See [visual-evidence-spec.md](visual-evidence-spec.md).
+
 ## Why separate from i18n
 
 Font scaling changes line height, reflow, icon-to-label ratios, and fixed-height clipping — not just string length. WCAG 1.4.4 (web) requires 200% zoom without loss of content/function. iOS Dynamic Type and Android font/display size are native equivalents.

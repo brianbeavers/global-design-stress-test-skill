@@ -2,6 +2,22 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.0] — 2026-07-27
+
+### Added
+
+- **Show, don't tell** — mandatory visual evidence for all locales
+- [visual-evidence-spec.md](references/visual-evidence-spec.md) — full matrix, screenshots in Cursor + Figma
+- [translation-workflow.md](references/translation-workflow.md) — string inventory, real text swap (no placeholders)
+- Config: `visualEvidence`, `embedScreenshotsInReport`, `failureComparisonBaseline`, `reportOnly`
+- Failure side-by-side: baseline vs failing locale in report and Figma
+- Verification loop: screenshot must show target language before PASS
+
+### Changed
+
+- Phase 4 Figma push is required unless `reportOnly: true`
+- i18n checklist requires screenshot evidence per cell
+
 ## [1.0.1] — 2026-07-26
 
 ### Changed

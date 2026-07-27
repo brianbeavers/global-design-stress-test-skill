@@ -2,6 +2,19 @@
 
 Structure and naming for Phase 4 Figma push-back.
 
+## Show, don't tell
+
+Every matrix cell must contain **rendered localized UI** — not a label describing what the locale should show.
+
+Before marking a run complete:
+
+- [ ] Every locale × screen has a frame with translated text visible
+- [ ] `get_screenshot` confirms target language in user-facing strings
+- [ ] FAIL cells have baseline | locale side-by-side compare
+- [ ] No summary-only section without full grid
+
+See [visual-evidence-spec.md](visual-evidence-spec.md) and [translation-workflow.md](translation-workflow.md).
+
 ## Section hierarchy
 
 Create one top-level section per run:
@@ -46,7 +59,15 @@ Use design system text styles where available; fallback Inter 14/12.
 
 **RTL locales:** mirror cell content; add `RTL` tag in frame name for ar-*.
 
-**MT strings:** append `[MT]` to frame name when machine-translated.
+**MT strings:** append `[MT]` to frame name when machine-translated — **text inside frame must still show the translation**.
+
+**Failure compare:** for FAIL cells, place baseline frame immediately left of failing frame:
+
+```
+[ en-US · widget · BASELINE ]  [ de-DE · widget · FAIL ]
+```
+
+Add `_Annotation / {locale} · {screen} — {defect}` callout with English → translated string and layer name.
 
 ## Font Scaling section
 
@@ -118,8 +139,10 @@ _Annotation / {Topic} — {optional scope}
    - `use_figma` with `fileKey` — create section frame, set name
 
 3. **Clone and localize**
-   - `use_figma` — clone baseline per locale; swap text; mirror RTL
-   - Batch by row to avoid timeout — one `use_figma` call per locale row
+   - Extract string inventory from baseline (translation-workflow)
+   - `use_figma` — clone per locale; **set text node `characters`** to translated strings
+   - `get_screenshot` per cell — verify language before marking PASS/FAIL
+   - Batch by row — one `use_figma` call per locale row
 
 4. **Font scaling clones**
    - Clone from localized frame; scale text per font-scaling-checklist

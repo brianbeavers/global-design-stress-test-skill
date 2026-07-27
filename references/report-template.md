@@ -22,9 +22,27 @@
 
 ### Top 3 risks
 
-1. {risk 1 — e.g. DE+Large CTA clip on widget}
-2. {risk 2 — e.g. ar-SA RTL focus order on discounts sheet}
-3. {risk 3 — e.g. Calendar weekday headers English fallback in IT}
+1. {risk 1 — with link to visual evidence section below}
+2. {risk 2}
+3. {risk 3}
+
+---
+
+## Visual evidence — all locales
+
+Embed screenshots for **every** locale × screen. Do not list FAIL-only.
+
+### {locale} · {screen} · {PASS|FAIL|PARTIAL}
+
+| Baseline ({failureComparisonBaseline}) | {locale} |
+|----------------------------------------|----------|
+| ![baseline-{locale}-{screen}](path-or-embed) | ![{locale}-{screen}](path-or-embed) |
+
+- **Strings swapped:** {list key strings: EN → target, tag [MT] if machine-translated}
+- **Defect (if FAIL):** {visible issue — clip, overlap, RTL break, English fallback}
+- **Figma frame:** {link or node id}
+
+Repeat for each locale × screen in the matrix.
 
 ---
 

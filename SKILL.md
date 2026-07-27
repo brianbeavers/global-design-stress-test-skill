@@ -5,7 +5,25 @@ description: Stress-tests UI designs for internationalization and design-time ac
 
 # Global Design Stress Test
 
-Orchestrates i18n layout stress, design-time accessibility, and font scaling across locales. Delivers a structured Cursor report and pushes documentation back to Figma.
+Orchestrates i18n layout stress, design-time accessibility, and font scaling across locales. Delivers a structured Cursor report **with embedded screenshots** and pushes a **full visual matrix** back to Figma.
+
+## Show, don't tell (mandatory)
+
+Every run must **show** translated and accessibility-stressed UI — not only PASS/FAIL prose.
+
+| Requirement | Detail |
+|-------------|--------|
+| **All locales** | Full matrix — every locale × screen gets a visual cell |
+| **Real translations** | Actual target-language strings in UI — not placeholder frame labels |
+| **Both outputs** | Figma matrix + Cursor chat with embedded screenshots |
+| **Both paths** | Figma clone and/or prototype capture — use what the project has |
+| **Failure compare** | Side-by-side baseline vs failing locale with callouts |
+
+Read [visual-evidence-spec.md](references/visual-evidence-spec.md) and [translation-workflow.md](references/translation-workflow.md) before Phase 1.
+
+**Banned:** Figma sections with placeholder labels and English-only frames inside.
+
+Phase 4 (Figma) is **not optional** unless `reportOnly: true` in config.
 
 ## Languages covered
 
@@ -21,6 +39,8 @@ Read these reference files when executing (do not duplicate their content here):
 
 | File | When |
 |------|------|
+| [visual-evidence-spec.md](references/visual-evidence-spec.md) | **Required** — show-don't-tell rules, screenshots, full matrix |
+| [translation-workflow.md](references/translation-workflow.md) | **Required** — extract strings, swap real translations |
 | [locale-registry.md](references/locale-registry.md) | Resolving locale packs and BCP-47 metadata |
 | [i18n-checklist.md](references/i18n-checklist.md) | Phase 1 pass/fail |
 | [a11y-checklist.md](references/a11y-checklist.md) | Phase 2 pass/fail |
@@ -71,6 +91,10 @@ Task Progress:
 | `fontScaleSteps` | `["small", "default", "large"]` — default all three |
 | `fontScaleSweepLocales` | `"risk-set"` (default) \| `"all"` \| array of BCP-47 codes |
 | `fontScaleProfile` | `"platform-default"` — maps to platform table in font-scaling-checklist |
+| `visualEvidence` | `"full-matrix"` (default) — visual cell for every locale × screen |
+| `embedScreenshotsInReport` | `true` (default) — inline images in Cursor chat |
+| `failureComparisonBaseline` | `"en-US"` — side-by-side compare for FAIL cells |
+| `reportOnly` | `false` — set `true` only to skip Figma push |
 
 ## Hybrid execution decision tree
 
@@ -87,35 +111,39 @@ Task Progress:
    custom          → user-supplied list
 4. Phase 2.5 font scaling on risk locales (or all if configured)
 5. Delegate flagged a11y to apca-compliance-figma + create-voice
-6. Emit report → push Figma section
+6. Emit report **with embedded screenshots** → push Figma **full visual matrix**
 ```
 
 ## Phase 1 — i18n stress
 
 For each **locale × screen variant** in config, evaluate against [i18n-checklist.md](references/i18n-checklist.md).
 
-### Figma path (default)
+Follow [translation-workflow.md](references/translation-workflow.md) for string inventory and swap. Follow [visual-evidence-spec.md](references/visual-evidence-spec.md) for screenshots.
+
+### Figma path
 
 1. `get_design_context` + `get_screenshot` on baseline node
-2. `use_figma` — create output section (see figma-output-spec)
-3. Clone baseline frame per locale; swap text with localized strings
-   - Machine translation acceptable — tag with `[MT]` in frame name
-   - Prioritize long-string locales: DE, FI, CS, RU
-4. For RTL locales (`ar-*`): mirror auto-layout, flip directional icons/chevrons
-5. Apply locale format rules (24h clock, date order) per locale-registry
+2. Build **string inventory** from baseline text nodes
+3. Translate inventory per locale (project copy or `[MT]`)
+4. `use_figma` — create output section; clone baseline per locale
+5. **Set `characters` on text nodes** to translated strings — verify with `get_screenshot` that UI is not English
+6. RTL mirroring for `ar-*`; locale formats per locale-registry
+7. Push each cell to matrix; buffer screenshot for Cursor report
+8. FAIL cells: add side-by-side baseline compare frame
 
-### Prototype path (optional)
+### Prototype path
 
 When `executionPath` is `prototype` or `both`:
 
-1. Start dev server from config `prototype.devServerUrl`
-2. Navigate `?{scenarioParam}={scenarioId}` per locale/variant
-3. Capture screenshots via Playwright or browser MCP
-4. Upload via Figma MCP `upload_assets` + place in matrix section
+1. Apply translations via scenario presets, copy bundles, or temporary `[MT]` locale files
+2. Capture PNG per locale × variant (Playwright or browser MCP)
+3. **Verify** PNG shows target language — reject English-only captures
+4. `upload_assets` → place in Figma matrix
+5. Embed same PNGs in Cursor report
 
-Reference pattern: `booking-widget-prototype/scripts/capture-i18n-screens.mjs`
+If prototype unavailable, Figma path alone satisfies visual evidence.
 
-Record PASS/FAIL per cell. Flag English fallback, truncation, RTL mirroring failures.
+Record PASS/FAIL per cell **from screenshot evidence**, not inference.
 
 ## Phase 2 — Design-time accessibility
 
@@ -161,21 +189,24 @@ Apply `?fontScale=small|large` or CSS root scaling if project supports it; captu
 
 Fill [report-template.md](references/report-template.md) and post in chat.
 
-Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests persistence.
+**Required:** embed screenshots for **every locale × screen** when `embedScreenshotsInReport` is true (default). FAIL cells include baseline side-by-side tables per [visual-evidence-spec.md](references/visual-evidence-spec.md).
+
+Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests persistence (include image paths or links).
 
 ## Phase 4 — Figma push-back
 
-Follow [figma-output-spec.md](references/figma-output-spec.md).
+Follow [figma-output-spec.md](references/figma-output-spec.md). Skip only if `reportOnly: true`.
 
 ### MCP sequence
 
 1. `get_design_context` + `get_screenshot` on baseline
 2. `use_figma` — create section `{outputSectionName} — {date}`
-3. Build i18n matrix grid (row = locale, column = screen variant)
-4. Add a11y annotation sidecars (`_Annotation / …` lavender frames)
-5. Add Font Scaling rows (Small / Large for risk locales)
-6. `upload_assets` — if prototype captures exist
-7. Return Figma section link in report
+3. Build **full** i18n matrix — every locale × variant with **translated UI inside frames**
+4. Add failure comparison pairs (baseline | failing locale)
+5. Add a11y annotation sidecars with screenshot refs
+6. Add Font Scaling rows with Small / Large screenshots
+7. `upload_assets` — when prototype captures exist (`both` or `prototype`)
+8. Return Figma section link; confirm no placeholder-only cells
 
 ### Frame naming
 

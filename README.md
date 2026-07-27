@@ -47,13 +47,24 @@ Add `"localePack": "extended"` for global market coverage. **Additional language
 
 Full metadata (24h clock, long-string risk, scripts): [references/locale-registry.md](references/locale-registry.md).
 
+## Show, don't tell
+
+The skill requires **visual proof** for every locale:
+
+- **All 13+ languages** get a screenshot / Figma frame — not failures only
+- **Real translated text** in the UI (machine translation OK, tagged `[MT]`)
+- **Cursor chat** embeds images; **Figma** gets the full matrix
+- **Figma-only or prototype-only** projects both supported
+
+See [references/visual-evidence-spec.md](references/visual-evidence-spec.md).
+
 ## What it does
 
 1. **i18n stress** — layout, RTL, long strings, locale formats (**13 core languages**, up to **30 locales** extended)
 2. **Accessibility** — contrast, touch targets, focus order, localized screen reader copy
 3. **Font scaling** — small / default / large user settings (Dynamic Type, Android font size, web zoom)
-4. **Cursor report** — structured PASS/FAIL matrix with critical findings
-5. **Figma push-back** — documented matrix, font scaling rows, and `_Annotation` sidecars
+4. **Cursor report** — structured PASS/FAIL matrix with **embedded screenshots for every locale**
+5. **Figma push-back** — full visual matrix with **real translated UI** in every cell (not placeholder labels)
 
 ## Install (Cursor)
 
