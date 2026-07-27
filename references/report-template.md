@@ -48,7 +48,7 @@ Repeat for each locale × screen in the matrix.
 
 ## Matrix
 
-| Locale | Screen | i18n Layout | RTL | Formats | Font Small | Font Large | Contrast | Touch | Focus | Voice | Status |
+| Locale | Screen | i18n Layout | RTL | Formats | Font Small | Font Large | Contrast@Scale | Touch@Scale | Focus | Voice | Status |
 |--------|--------|-------------|-----|---------|------------|------------|----------|-------|-------|-------|--------|
 | de-DE | widget | PASS | — | PASS | PASS | FAIL | PASS | PASS | PASS | SKIP | **FAIL** |
 | ar-SA | discounts | PASS | PASS | PASS | PASS | PASS | PASS | FAIL | FAIL | PARTIAL | **FAIL** |

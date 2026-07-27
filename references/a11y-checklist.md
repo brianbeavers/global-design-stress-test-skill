@@ -1,29 +1,12 @@
 # Accessibility Checklist (Design-Time)
 
-Pass/fail criteria for Phase 2. Run per **locale × screen variant**; prioritize Phase 1 failures.
+Pass/fail criteria split across **Phase 2** (scale-independent) and **Phase 2.6** (post-scale). **Do not mark Contrast or Touch PASS until Phase 2.6 completes.**
 
-## Contrast
+## Phase 2 — Scale-independent (run after Phase 1, before Phase 2.5)
 
-| Check | Pass | Fail |
-|-------|------|------|
-| Text on background | APCA Lc ≥ 60 for UI labels; Lc ≥ 75 for body; WCAG AA 4.5:1 text | Longest localized string drops below threshold after wrap |
-| Icons | Same contrast as adjacent text | Icon-only control below 3:1 |
-| Disabled state | Lc ≥ 30, still perceivable | Disabled text invisible |
-| Error state | Error text meets contrast on error bg | Red-on-red below threshold |
+Evaluate on **default-scale** localized UI screenshots.
 
-**Delegation:** contrast failures → read `apca-compliance-figma` skill; annotate failing token pairs on Figma canvas.
-
-Re-evaluate contrast **after** font scaling (Phase 2.5) — small scale can push secondary text below floor.
-
-## Touch targets
-
-| Check | Pass | Fail |
-|-------|------|------|
-| Minimum size | Interactive elements ≥ 44×44 pt (iOS) / 48×48 dp (Android) / 44×44 CSS px (web) | Tap target shrinks when label wraps |
-| Spacing | Targets separated; no overlapping hit areas | Adjacent tappable elements overlap |
-| CTA | Primary action remains full-width tappable at large font scale | CTA height collapses |
-
-## Focus order
+### Focus order
 
 | Check | Pass | Fail |
 |-------|------|------|
@@ -34,7 +17,7 @@ Re-evaluate contrast **after** font scaling (Phase 2.5) — small scale can push
 
 Document focus order as numbered list in `_Annotation / RTL focus order` frame for RTL locales.
 
-## Non-color cues
+### Non-color cues
 
 | Check | Pass | Fail |
 |-------|------|------|
@@ -42,7 +25,7 @@ Document focus order as numbered list in `_Annotation / RTL focus order` frame f
 | Required fields | Asterisk, label, or aria-required — not color border only | Required state color-only |
 | Links | Underline or icon in addition to color | Link distinguished by color only |
 
-## Screen reader copy
+### Screen reader copy
 
 | Check | Pass | Fail |
 |-------|------|------|
@@ -54,7 +37,7 @@ Document focus order as numbered list in `_Annotation / RTL focus order` frame f
 
 **Delegation:** top 3 risk locales (DE, ar-SA, ja-JP) → read `create-voice` skill; produce `{Component} Screen reader — {locale}` frames with **localized** announcement strings.
 
-## RTL-specific a11y
+### RTL-specific a11y
 
 | Check | Pass | Fail |
 |-------|------|------|
@@ -63,29 +46,62 @@ Document focus order as numbered list in `_Annotation / RTL focus order` frame f
 | Directional gestures | Swipe-to-dismiss mirrors | Gesture direction LTR-only |
 | Icons | Back chevron, forward arrow mirror | Directional icon not mirrored |
 
+---
+
+## Phase 2.6 — Post-scale (run after Phase 2.5 font scaling)
+
+Evaluate on **scaled UI screenshots** (Small and/or Large tiers). Required before final PASS/FAIL.
+
+### Contrast
+
+| Check | Pass | Fail |
+|-------|------|------|
+| Text on background | APCA Lc ≥ 60 for UI labels; Lc ≥ 75 for body; WCAG AA 4.5:1 text at **scaled** size | Longest localized string drops below threshold after wrap at Large tier |
+| Small tier legibility | Secondary text still meets Lc ≥ 30 floor | Microcopy illegible at Small |
+| Icons | Same contrast as adjacent text at scaled size | Icon-only control below 3:1 after scale |
+| Disabled state | Lc ≥ 30, still perceivable at scaled size | Disabled text invisible |
+| Error state | Error text meets contrast on error bg at scaled size | Red-on-red below threshold |
+
+**Delegation:** contrast failures → read `apca-compliance-figma` skill; annotate failing token pairs on **scaled** Figma frames.
+
+Default-scale contrast alone is **insufficient** — always re-check on Large tier (and Small when secondary text is at risk).
+
+### Touch targets
+
+| Check | Pass | Fail |
+|-------|------|------|
+| Minimum size at Large | Interactive elements ≥ 44×44 pt (iOS) / 48×48 dp (Android) / 44×44 CSS px (web) | Tap target shrinks when label wraps at Large scale |
+| CTA at Large | Primary action remains tappable | CTA height collapses under scaled text |
+| Spacing | Targets separated; no overlapping hit areas after reflow | Adjacent tappable elements overlap at Large |
+
+---
+
 ## Status values
 
-Same as i18n checklist: **PASS** | **FAIL** | **PARTIAL** | **SKIP**
+**PASS** | **FAIL** | **PARTIAL** | **SKIP**
+
+Overall a11y status for a cell = worst of Phase 2 and Phase 2.6 dimensions.
 
 ## Matrix columns (report)
 
-| Column | Source check |
-|--------|--------------|
-| Contrast | Contrast section |
-| Touch | Touch targets |
-| Focus | Focus order (+ RTL) |
-| Voice | Screen reader copy |
+| Column | Phase |
+|--------|-------|
+| Focus | 2 |
+| Voice | 2 |
+| Contrast | **2.6** (post-scale) |
+| Touch | **2.6** (post-scale) |
 
 ## Findings format
 
 ```
 [{locale}] [{screen}] A11y/{dimension}: {observation} → {recommendation}
+[{locale}] [{screen}] A11y/Contrast@Large: {observation} → {recommendation}
 ```
 
-Example:
+Examples:
 
 ```
-[de-DE] [widget] A11y/Contrast: Label Lc 52 after wrap → increase contrast token or allow 2-line label
+[de-DE] [widget] A11y/Contrast@Large: Label Lc 52 after wrap at Accessibility Large → increase contrast or allow 2-line label
+[de-DE] [widget] A11y/Touch@Large: CTA height 36pt after DE label wraps → min-height 44pt
 [ar-SA] [sheet] A11y/Focus: dismiss button first in LTR order → reorder for RTL flow
-[ja-JP] [calendar] A11y/Voice: month announced in English → localize accessibilityLabel
 ```

@@ -124,8 +124,9 @@ See [references/locale-registry.md](references/locale-registry.md) for the compl
 |-------|--------|
 | 0 | Load `stress-test-config.json` |
 | 1 | i18n matrix (locale × screen) |
-| 2 | Design-time a11y |
+| 2 | Accessibility — scale-independent (focus, voice, non-color) |
 | 2.5 | Font scaling (risk locales + DE+Large worst case) |
+| 2.6 | Accessibility — post-scale (contrast, touch on scaled UI) |
 | 3 | Cursor report |
 | 4 | Figma section + annotations |
 

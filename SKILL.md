@@ -43,7 +43,7 @@ Read these reference files when executing (do not duplicate their content here):
 | [translation-workflow.md](references/translation-workflow.md) | **Required** — extract strings, swap real translations |
 | [locale-registry.md](references/locale-registry.md) | Resolving locale packs and BCP-47 metadata |
 | [i18n-checklist.md](references/i18n-checklist.md) | Phase 1 pass/fail |
-| [a11y-checklist.md](references/a11y-checklist.md) | Phase 2 pass/fail |
+| [a11y-checklist.md](references/a11y-checklist.md) | Phase 2 + Phase 2.6 pass/fail |
 | [font-scaling-checklist.md](references/font-scaling-checklist.md) | Phase 2.5 pass/fail |
 | [report-template.md](references/report-template.md) | Phase 3 output |
 | [figma-output-spec.md](references/figma-output-spec.md) | Phase 4 Figma push |
@@ -62,8 +62,9 @@ Copy and track progress:
 Task Progress:
 - [ ] Phase 0: Load or create stress-test-config.json
 - [ ] Phase 1: i18n stress (locale × screen variants)
-- [ ] Phase 2: Design-time a11y checks
+- [ ] Phase 2: Accessibility — scale-independent (focus, voice, non-color, RTL)
 - [ ] Phase 2.5: Font scaling (risk locales + failures)
+- [ ] Phase 2.6: Accessibility — post-scale (contrast, touch targets on scaled UI)
 - [ ] Phase 3: Emit Cursor report
 - [ ] Phase 4: Push Figma section + annotations
 ```
@@ -110,8 +111,9 @@ Task Progress:
    extended        → core + extended markets
    custom          → user-supplied list
 4. Phase 2.5 font scaling on risk locales (or all if configured)
-5. Delegate flagged a11y to apca-compliance-figma + create-voice
-6. Emit report **with embedded screenshots** → push Figma **full visual matrix**
+5. Phase 2.6 post-scale a11y on scaled screenshots (contrast + touch — do not skip)
+6. Delegate flagged a11y to apca-compliance-figma + create-voice
+7. Emit report **with embedded screenshots** → push Figma **full visual matrix**
 ```
 
 ## Phase 1 — i18n stress
@@ -145,28 +147,26 @@ If prototype unavailable, Figma path alone satisfies visual evidence.
 
 Record PASS/FAIL per cell **from screenshot evidence**, not inference.
 
-## Phase 2 — Design-time accessibility
+## Phase 2 — Accessibility (scale-independent)
 
-Per locale × variant (prioritize failures from Phase 1), run [a11y-checklist.md](references/a11y-checklist.md):
+Run **after Phase 1**, **before Phase 2.5**. Per locale × variant, run the **scale-independent** sections of [a11y-checklist.md](references/a11y-checklist.md):
 
-| Dimension | Quick check |
-|-----------|-------------|
-| Contrast | APCA Lc / WCAG AA on longest string + bg pair |
-| Touch targets | Interactive elements ≥ 44×44 pt/dp after wrap |
-| Focus order | Logical; RTL reverses appropriately |
-| Non-color cues | State not color-only |
-| Screen reader | Localized label intent, not English fallback |
+| Dimension | When evaluated |
+|-----------|----------------|
+| Focus order | Default-scale localized UI |
+| Non-color cues | Default scale |
+| Screen reader copy | Default scale |
+| RTL-specific a11y | Default scale (ar-*) |
 
-**Delegation:**
+**Do not mark Contrast or Touch targets PASS/FAIL here** — those require Phase 2.6 on scaled UI.
 
-1. Contrast failures → read `apca-compliance-figma`, annotate token pairs
-2. Top 3 risk locales (DE, ar-SA, ja-JP) → read `create-voice`, produce localized voice frames
+**Delegation (scale-independent):**
 
-**RTL a11y:** focus order follows visual RTL; document mixed-script announcements (Latin codes in Arabic UI); mirror directional icons.
+Top 3 risk locales (DE, ar-SA, ja-JP) → read `create-voice`, produce localized voice frames.
 
 ## Phase 2.5 — Font scaling
 
-Run **after** i18n string swap. Worst case = **longest locale + largest scale**.
+Run **after Phase 2** (scale-independent a11y). Worst case = **longest locale + largest scale**.
 
 See [font-scaling-checklist.md](references/font-scaling-checklist.md) for platform mapping and sampling.
 
@@ -179,11 +179,28 @@ See [font-scaling-checklist.md](references/font-scaling-checklist.md) for platfo
 
 ### Figma path
 
-Clone locale frames; scale text nodes per platform table. Do **not** auto-expand fixed frames — surface clipping failures.
+Clone locale frames; scale text nodes per platform table. Do **not** auto-expand fixed frames — surface clipping failures. `get_screenshot` each tier.
 
 ### Prototype path
 
 Apply `?fontScale=small|large` or CSS root scaling if project supports it; capture per tier.
+
+## Phase 2.6 — Accessibility (post-scale)
+
+Run **after Phase 2.5** — mandatory. Re-open [a11y-checklist.md](references/a11y-checklist.md) **Post-scale** sections only:
+
+| Dimension | Evaluate on |
+|-----------|-------------|
+| **Contrast** | Small + Large tier screenshots — longest string after wrap/reflow |
+| **Touch targets** | Large tier (and Small if CTA shrinks) — ≥ 44×44 pt/dp |
+
+Rules:
+
+- A cell **cannot** be marked PASS for Contrast or Touch in the report until Phase 2.6 completes on scaled UI.
+- If default-scale contrast passed but Large tier fails → overall **FAIL** for that dimension.
+- Embed scaled screenshots as evidence per [visual-evidence-spec.md](references/visual-evidence-spec.md).
+
+**Delegation (post-scale contrast):** failures → read `apca-compliance-figma`, annotate on scaled frames.
 
 ## Phase 3 — Cursor report
 

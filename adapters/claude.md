@@ -20,13 +20,15 @@ Follow the global-design-stress-test workflow:
 
 Phase 0: Gather or create stress-test-config.json (project name, Figma URL, platform, locale pack, screen variants, execution path, font scale settings).
 
-Phase 1 — i18n: For each locale × screen variant, evaluate layout, RTL, locale formats using i18n-checklist.md. Record PASS/FAIL.
+Phase 1 — i18n: For each locale × screen variant, evaluate layout, RTL, locale formats using i18n-checklist.md. Real translated strings + screenshots for ALL locales. Read visual-evidence-spec.md and translation-workflow.md first.
 
-Phase 2 — a11y: Evaluate contrast, touch targets, focus order, non-color cues, screen reader copy using a11y-checklist.md. Flag DE, ar-SA, ja-JP for deep review.
+Phase 2 — a11y (scale-independent): Focus order, non-color cues, screen reader copy using a11y-checklist Phase 2. Do NOT mark Contrast or Touch PASS yet.
 
-Phase 2.5 — Font scaling: After i18n swap, test Small/Default/Large on risk locales (de-DE, ar-SA, ja-JP, baseline). Always evaluate DE+Large worst-case combo. Use font-scaling-checklist.md.
+Phase 2.5 — Font scaling: Test Small/Large on risk locales (de-DE, ar-SA, ja-JP, baseline). DE+Large worst-case. Use font-scaling-checklist.md.
 
-Phase 3: Output report using report-template.md structure in chat.
+Phase 2.6 — a11y (post-scale): Re-check Contrast and Touch on scaled screenshots using a11y-checklist Phase 2.6. Required before final PASS.
+
+Phase 3: Output report using report-template.md with Visual evidence section for every locale.
 
 Phase 4 (manual): Describe Figma section structure from figma-output-spec.md. You cannot write to Figma without MCP — provide frame names, grid layout, and annotation content for the designer to place.
 

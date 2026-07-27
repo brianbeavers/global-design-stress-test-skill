@@ -2,6 +2,13 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.1] — 2026-07-27
+
+### Fixed
+
+- **Phase order:** split a11y into Phase 2 (scale-independent) and Phase 2.6 (post-scale contrast + touch after font scaling)
+- **ChatGPT adapter:** require `visual-evidence-spec.md` and `translation-workflow.md` in knowledge upload and instructions
+
 ## [1.1.0] — 2026-07-27
 
 ### Added
