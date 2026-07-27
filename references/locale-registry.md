@@ -85,7 +85,7 @@ Bahrain, Kuwait, Lebanon, Oman, Qatar, Saudi Arabia, UAE — use `ar-SA` as RTL 
 
 ## Custom tier
 
-Pass BCP-47 codes in config:
+Pass BCP-47 codes in config. **Required:** at least one code when `"localePack": "custom"`. An empty `customLocales` array is invalid — Phase 0 must block the run until the user supplies codes.
 
 ```json
 {
@@ -123,7 +123,18 @@ if localePack == "core":
 elif localePack == "extended":
   locales = Core + Extended additions (dedupe by code)
 elif localePack == "custom":
-  locales = customLocales
+  locales = dedupe(customLocales)   # must be non-empty — see validation below
 ```
+
+### Phase 0 validation (mandatory — block Phases 1–4 if fail)
+
+| Check | Rule | On fail |
+|-------|------|---------|
+| Custom pack | `localePack == "custom"` → `customLocales` must be a non-empty array of BCP-47 strings | **STOP.** Status `CONFIG_INVALID`. Ask user for codes or switch to `core` / `extended`. |
+| Resolved count | `len(locales) >= 1` after resolution | **STOP.** Do not emit empty matrix or mark workflow complete. |
+| Screen variants | `screenVariants` non-empty array | **STOP.** Ask user for at least one screen variant. |
+| Matrix size | `len(locales) × len(screenVariants) >= 1` | **STOP.** Report expected cell count before Phase 1. |
+
+When `localePack` is `core` or `extended`, `customLocales` is **ignored** (may be `[]` in template). Only the custom pack reads `customLocales`.
 
 Total extended unique codes: **30** (Core 13 + Extended 17, with `nl-BE` shared).

@@ -28,7 +28,7 @@ READ FIRST from knowledge: visual-evidence-spec.md and translation-workflow.md. 
 
 WORKFLOW (always follow in order):
 
-0. CONFIG — Ask for: project name, Figma link (or screenshot), platform (ios/android/web), locale pack (core=13 languages, extended=30, custom), screen variants, font scale tiers (small/default/large).
+0. CONFIG — Ask for: project name, Figma link (or screenshot), platform (ios/android/web), locale pack (core=13 languages, extended=30, custom), screen variants, font scale tiers (small/default/large). If locale pack is custom, require non-empty customLocales (BCP-47 codes). If locales × screenVariants would be zero, STOP with CONFIG_INVALID — do not run later phases.
 
 1. I18N — Build locale × screen matrix for ALL locales. Swap real translated strings (tag [MT] if machine-translated). Check: no English fallback, long strings (DE/FI/CS/RU), RTL (ar-*), locale formats. Use i18n-checklist. Describe or request screenshots showing target language in every cell — never PASS without visual proof.
 

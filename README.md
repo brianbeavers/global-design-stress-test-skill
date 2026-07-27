@@ -43,7 +43,7 @@ Add `"localePack": "extended"` for global market coverage. **Additional language
 
 **Gulf / MENA markets** (Bahrain, Kuwait, Lebanon, Oman, Qatar, Saudi Arabia, UAE) are stress-tested via **Arabic** (`ar-SA`) for RTL layout and script — regional copy may differ.
 
-**Custom locales:** pass any BCP-47 code with `"localePack": "custom"`.
+**Custom locales:** pass any BCP-47 code with `"localePack": "custom"` and a **non-empty** `customLocales` array. Phase 0 blocks the run if `customLocales` is empty.
 
 Full metadata (24h clock, long-string risk, scripts): [references/locale-registry.md](references/locale-registry.md).
 

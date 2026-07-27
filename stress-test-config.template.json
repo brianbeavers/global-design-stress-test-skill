@@ -9,6 +9,7 @@
   "baselineLocale": "en-US",
   "localePack": "core",
   "customLocales": [],
+  "_customLocalesNote": "Ignored when localePack is core or extended. When localePack is custom, replace [] with at least one BCP-47 code before Phase 1.",
   "screenVariants": ["default"],
   "executionPath": "figma",
   "visualEvidence": "full-matrix",

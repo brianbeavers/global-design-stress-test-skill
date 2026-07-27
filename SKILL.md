@@ -81,13 +81,19 @@ Task Progress:
 3. Parse Figma URL:
    - Standard: `figma.com/design/:fileKey/...?node-id=:nodeId` → convert `-` to `:` in nodeId
    - Branch URL: use `branchKey` as fileKey
+4. **Validate config** before Phase 1 — see [locale-registry.md](references/locale-registry.md) Phase 0 validation:
+   - If `localePack` is `custom`, `customLocales` must contain at least one BCP-47 code (empty `[]` is **CONFIG_INVALID**)
+   - Resolved locale count and `screenVariants` must each be ≥ 1
+   - Log expected matrix size: `locales × screenVariants` cells
+   - **STOP** and ask the user to fix config — do not run Phases 1–4 with zero cells
 
 ### Config fields
 
 | Field | Purpose |
 |-------|---------|
 | `localePack` | Which locales to include — see locale-registry tiers |
-| `screenVariants` | Project screens to stress (e.g. widget, sheet, error) |
+| `customLocales` | BCP-47 codes — **required non-empty** when `localePack` is `custom`; ignored otherwise |
+| `screenVariants` | Project screens to stress (e.g. widget, sheet, error) — must be non-empty |
 | `executionPath` | `figma` \| `prototype` \| `both` |
 | `fontScaleSteps` | `["small", "default", "large"]` — default all three |
 | `fontScaleSweepLocales` | `"risk-set"` (default) \| `"all"` \| array of BCP-47 codes |
@@ -109,7 +115,9 @@ Task Progress:
 3. localePack?
    core            → 13 locales (fast)
    extended        → core + extended markets
-   custom          → user-supplied list
+   custom          → user-supplied list (customLocales must be non-empty)
+   → Validate: len(locales) >= 1 and len(screenVariants) >= 1
+      Fail → STOP (CONFIG_INVALID), do not proceed
 4. All paths — Phase 2.5 font scaling on risk locales (or all if configured)
 5. All paths — Phase 2.6 post-scale a11y on scaled screenshots (contrast + touch — mandatory)
 6. Delegate flagged a11y to apca-compliance-figma + create-voice

@@ -2,6 +2,13 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.1.3] — 2026-07-27
+
+### Fixed
+
+- **Custom locale pack:** Phase 0 now requires non-empty `customLocales` when `localePack` is `custom`; blocks Phases 1–4 with zero matrix cells (`CONFIG_INVALID`)
+- **Config template:** documents that `customLocales` is ignored unless pack is `custom`
+
 ## [1.1.2] — 2026-07-27
 
 ### Fixed
