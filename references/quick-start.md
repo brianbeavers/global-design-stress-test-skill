@@ -36,8 +36,8 @@ Or: *i18n stress test*, *font scaling QA*, *RTL layout check*.
 
 | Deliverable | When |
 |-------------|------|
-| **Cursor report** | Always — start with **Action items (P0/P1)**, then failures with screenshots |
-| **Figma matrix** | When `reportOnly: false` — linked after Phase 4 |
+| **Cursor report** | Always — start with **Prioritized checklist** (Issue + Recommendation), then action items and failure screenshots |
+| **Figma section** | When `reportOnly: false` — **Issues Checklist** frame first, then Summary + matrix (cells fully visible, not cropped) |
 
 Read [how-to-read-results.md](how-to-read-results.md) to interpret the report.
 

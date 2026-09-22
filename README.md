@@ -27,6 +27,13 @@ Every run produces a **stakeholder report** structured for action:
 
 Report status: **FINAL** (safe to share) or **DRAFT** (Figma matrix still pending).
 
+## What's new in 1.3.0
+
+- **Figma fitment** — matrix and font-scaling cells expand (PNGs use Fit) so screenshots are not cut off. Product text that clips inside the design is still marked **FAIL** and must remain fully visible in the cell. See [figma-presentation-fitment.md](references/figma-presentation-fitment.md).
+- **Issues Checklist** — Figma lead frame + matching **Prioritized checklist** in the Cursor/LLM report: Issue, Recommendation, Evidence, Owner (P0 → P2).
+
+Full notes: [CHANGELOG.md](CHANGELOG.md) · [GitHub Releases](https://github.com/brianbeavers/global-design-stress-test-skill/releases).
+
 ## Languages stress-tested
 
 Every run evaluates your design against localized copy, layout, RTL, date/time formats, and font scaling. The **core pack** (default) covers **13 languages**:

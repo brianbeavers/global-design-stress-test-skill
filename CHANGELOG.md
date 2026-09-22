@@ -4,15 +4,32 @@ All notable changes to the global-design-stress-test skill.
 
 ## [1.3.0] — 2026-09-22
 
+Usability release for **Figma evidence presentation** and **prioritized remediation**.
+
 ### Added
 
-- **figma-presentation-fitment.md** — expand documentation cells / Fit PNGs; product clipping stays FAIL but must remain fully visible
-- **Issues Checklist** — prioritized P0→P2 frame in Figma (lead deliverable) and matching Prioritized checklist in LLM reports (Issue + Recommendation + Evidence + Owner)
+- **[figma-presentation-fitment.md](references/figma-presentation-fitment.md)** — documentation fitment rules:
+  - Expand matrix / Font Scaling **cell frames** so clones are never cropped
+  - Prototype PNGs use **Fit** (contain), not Crop
+  - Full-cell `get_screenshot` verification before Phase 4 FINAL
+  - Clarifies **product UI clipping** (still a FAIL) vs **presentation cropping** (invalid deliverable)
+- **Issues Checklist — prioritized** — lead Figma frame in the stress-test section
+- **Prioritized checklist** section in the LLM/Cursor report (Issue + Recommendation + Evidence + Owner), P0 → P1 → P2
 
 ### Changed
 
-- Phase 4 MCP sequence: Issues Checklist first; fitment pass before FINAL
-- report-template, report-agent-guide, how-to-read-results, adapters updated for checklist + fitment
+- Phase 4 MCP sequence: create Issues Checklist first; run fitment pass before FINAL
+- [figma-output-spec.md](references/figma-output-spec.md) — cell size expands with content; Fit PNGs; checklist in section hierarchy
+- [font-scaling-checklist.md](references/font-scaling-checklist.md) — do not expand **product** fixed parents; do expand **documentation** cells
+- [report-template.md](references/report-template.md), [report-agent-guide.md](references/report-agent-guide.md), [how-to-read-results.md](references/how-to-read-results.md) — checklist-first reading order
+- Adapters (Cursor, Claude, ChatGPT) and README/example updated for checklist + fitment
+
+### Why it matters
+
+| Before | After |
+|--------|--------|
+| Matrix cells locked to baseline size → screenshots/clones often cut off | Cells grow / PNGs Fit → full UI visible in evidence |
+| Findings scattered in tables and annotations | One prioritized checklist (Figma + chat) with concrete recommendations |
 
 ## [1.2.4] — 2026-07-27
 
