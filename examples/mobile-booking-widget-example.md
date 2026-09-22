@@ -95,18 +95,27 @@ Run **after Phase 2.5** on scaled screenshots (Large tier minimum). Re-check Con
 
 ## Phase 3 — Report
 
-Use [report-template.md](../references/report-template.md). Stakeholders read **Action items** first, then failure screenshots, then matrix appendix.
+Use [report-template.md](../references/report-template.md). Stakeholders read **Prioritized checklist** first (Issue + Recommendation), then action-items table, then failure screenshots.
 
-Example action item: `P0 · de-DE · widget · Font scaling · CTA clips at Large → min-height 48pt (Design+Eng)`
+Example:
+
+```
+☐ P0 · de-DE · widget · Font scaling
+Issue: Primary CTA German label clips at Large font
+Recommendation: Allow 2-line wrap; set min-height 48pt
+Evidence: FS — DE · Large · widget · FAIL
+Owner: Design+Eng
+```
 
 See [how-to-read-results.md](../references/how-to-read-results.md).
 
 ## Phase 4 — Figma
 
-Create a dated section per [figma-output-spec.md](../references/figma-output-spec.md):
+Create a dated section per [figma-output-spec.md](../references/figma-output-spec.md) and [figma-presentation-fitment.md](../references/figma-presentation-fitment.md):
 
+- **Issues Checklist — prioritized** (lead frame)
 - Summary frame (pass/fail counts)
-- i18n matrix grid (locale rows × screen columns)
+- i18n matrix grid (locale rows × screen columns) — expand cells so content is not cropped
 - Font Scaling rows for risk locales
 - `_Annotation / Font scaling` and `_Annotation / RTL focus order` sidecars
 

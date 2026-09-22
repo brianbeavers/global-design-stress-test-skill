@@ -8,9 +8,24 @@
 
 ---
 
+## Prioritized checklist
+
+Ordered highest → lowest impact. Same content as the Figma **Issues Checklist** frame (when `reportOnly: false`). Every FAIL/PARTIAL must appear.
+
+### ☐ P{0|1|2} · {locale} · {screen} · {category}
+
+- **Issue:** {what broke — one sentence}
+- **Recommendation:** {concrete fix — copy / layout / a11y / font scaling}
+- **Evidence:** {Figma frame name/link or screenshot ref}
+- **Owner:** {Design | Eng | Content | Design+Eng}
+
+Repeat for each finding. If none: *No prioritized issues — all cells PASS.*
+
+---
+
 ## Start here — action items
 
-Fix these first. Sorted by priority (P0 → P1 → P2).
+Same findings as the checklist, table form for scanning.
 
 | Priority | Locale | Screen | Category | Issue | Recommended fix | Owner |
 |----------|--------|--------|----------|-------|-----------------|-------|
@@ -27,6 +42,7 @@ If this table is empty, overall status is **PASS** — see appendix for full mat
 
 ## How to read this report
 
+- Start with **Prioritized checklist** (and Figma **Issues Checklist** frame when available)
 - **P0** = ship blocker · **P1** = fix before launch · **P2** = polish / content
 - **Contrast@Scale** and **Touch@Scale** = checked at **large font**, not default size only
 - Full locale grid (including PASS) is in the **Matrix appendix** below
@@ -100,6 +116,7 @@ Screenshots for **FAIL** and **PARTIAL** cells only. Each item maps to a row in 
 
 | Section | Link | Frames |
 |---------|------|--------|
+| Issues Checklist | {url} | 1 |
 | Summary | {url} | 1 |
 | i18n Matrix | {url} | {locales × variants} |
 | Font Scaling | {url} | {tiers × risk locales} |
@@ -111,11 +128,14 @@ Screenshots for **FAIL** and **PARTIAL** cells only. Each item maps to a row in 
 ## Sign-off
 
 - [ ] P0 action items documented with owners
+- [ ] Prioritized checklist complete (every FAIL/PARTIAL has Issue + Recommendation + Evidence)
 - [ ] DE + Large worst-case reviewed
 - [ ] RTL locales have focus order noted (if applicable)
 - [ ] FAIL/PARTIAL cells have screenshots
 - [ ] Report status is **FINAL** before external share
 - [ ] Figma matrix link shared (Cursor + Figma mode only)
+- [ ] Figma Issues Checklist frame present (Cursor + Figma mode only)
+- [ ] Figma cells pass fitment (no presentation crop)
 
 ---
 

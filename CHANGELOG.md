@@ -2,6 +2,18 @@
 
 All notable changes to the global-design-stress-test skill.
 
+## [1.3.0] — 2026-09-22
+
+### Added
+
+- **figma-presentation-fitment.md** — expand documentation cells / Fit PNGs; product clipping stays FAIL but must remain fully visible
+- **Issues Checklist** — prioritized P0→P2 frame in Figma (lead deliverable) and matching Prioritized checklist in LLM reports (Issue + Recommendation + Evidence + Owner)
+
+### Changed
+
+- Phase 4 MCP sequence: Issues Checklist first; fitment pass before FINAL
+- report-template, report-agent-guide, how-to-read-results, adapters updated for checklist + fitment
+
 ## [1.2.4] — 2026-07-27
 
 ### Fixed

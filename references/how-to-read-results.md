@@ -7,11 +7,14 @@ Guide for **designers**, **engineers**, **PMs**, and **QA** — no need to read 
 Read in this order:
 
 1. **Report status** — `FINAL` (complete) or `DRAFT` (Figma matrix still pending)
-2. **Start here — action items** — P0/P1 fixes with owner and recommended action
-3. **Executive summary** — pass rates and top risks
-4. **Failures — visual evidence** — screenshots for every FAIL/PARTIAL cell
-5. **Full matrix** — appendix with all locales (including PASS)
-6. **Figma deliverables** — link to visual matrix (omitted in report-only mode)
+2. **Prioritized checklist** — P0→P2 Issue + Recommendation + Evidence (same as Figma **Issues Checklist** frame when present)
+3. **Action items table** — same findings, scannable grid
+4. **Executive summary** — pass rates and top risks
+5. **Failures — visual evidence** — screenshots for every FAIL/PARTIAL cell
+6. **Full matrix** — appendix with all locales (including PASS)
+7. **Figma deliverables** — link to visual matrix (omitted in report-only mode)
+
+**In Figma:** open the section → start with **Issues Checklist — prioritized**, then Summary and matrix.
 
 ## Priority levels
 

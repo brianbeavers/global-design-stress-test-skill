@@ -20,6 +20,7 @@ Use in a **Custom GPT** or ChatGPT project with uploaded knowledge files.
    - `references/how-to-read-results.md`
    - `references/quick-start.md`
    - `references/figma-output-spec.md`
+   - `references/figma-presentation-fitment.md`
    - `stress-test-config.template.json`
 
 ## Instructions (paste into Custom GPT)
@@ -43,9 +44,9 @@ WORKFLOW (always follow in order):
 
 READ FIRST: report-agent-guide.md, visual-evidence-spec.md, translation-workflow.md.
 
-5. REPORT — Use report-template.md for stakeholders. Lead with Action items table (P0/P1/P2, owner, fix). Failures-first screenshots; full matrix in appendix. Read report-agent-guide for severity rules and DRAFT/FINAL status. Do not paste agent instructions into the report.
+5. REPORT — Use report-template.md. Lead with Prioritized checklist (Issue + Recommendation + Evidence + Owner, P0→P2), then action-items table. Failures-first screenshots; full matrix in appendix. Read report-agent-guide for severity and DRAFT/FINAL. Do not paste agent instructions into the report.
 
-6. FIGMA SPEC — Skip when reportOnly true. Otherwise provide build spec from figma-output-spec.md.
+6. FIGMA SPEC — Skip when reportOnly true. Otherwise: Issues Checklist frame first; matrix cells must pass figma-presentation-fitment (expand cell / Fit PNG — no crop). Spec from figma-output-spec.md.
 
 RULES:
 - Show, don't tell — no finding without describing or showing the translated UI

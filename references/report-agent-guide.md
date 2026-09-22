@@ -7,10 +7,29 @@ Read before filling [report-template.md](report-template.md).
 ## Delivery rules
 
 1. **Stakeholder report** = fill `report-template.md` only — no HTML comments, no branching tables, no `{placeholder}` URLs
-2. **Lead with action items** — P0 first, then P1, then P2
+2. **Lead with Prioritized checklist** (prose Issue + Recommendation + Evidence), then action-items table
 3. **Failures-first visuals** — full PASS locale screenshots go in appendix unless user asked for full inline embeds
 4. **Assign severity** to every FAIL/PARTIAL — use [how-to-read-results.md](how-to-read-results.md) priority definitions
-5. **Assign owner** — `Design`, `Eng`, `Content`, or `Design+Eng` on every action item
+5. **Assign owner** — `Design`, `Eng`, `Content`, or `Design+Eng` on every checklist item
+6. **Concrete recommendations only** — no placeholders like “fix later” or “investigate”; name the fix (copy / layout / a11y / font scaling)
+
+## Prioritized checklist (required)
+
+Every FAIL and PARTIAL cell must appear once, sorted **P0 → P1 → P2**.
+
+**Format (LLM report + Figma Issues Checklist frame):**
+
+```
+☐ P{n} · {locale} · {screen} · {category}
+Issue: {one sentence}
+Recommendation: {concrete fix}
+Evidence: {frame name or screenshot ref}
+Owner: {role}
+```
+
+When `reportOnly: false`, mirror the same items into the Figma frame `Issues Checklist — prioritized` (see [figma-output-spec.md](figma-output-spec.md)).
+
+When `reportOnly: true`, checklist lives **only** in the LLM report.
 
 ## Report status banner
 
@@ -28,8 +47,8 @@ Read before filling [report-template.md](report-template.md).
 |---------|---------------------|---------------------|
 | Figma baseline link in header | Include | Omit — use **Design reference** instead |
 | Per-cell "Figma frame" bullet | Include after Phase 4 | Omit |
-| **Figma deliverables** section | Include with real URLs | **Omit entire section** |
-| Sign-off "Figma section link" | Include | Omit |
+| **Figma deliverables** section | Include with real URLs (incl. Issues Checklist) | **Omit entire section** |
+| Sign-off "Figma section link" / Issues Checklist | Include | Omit |
 
 Never insert `{url}` placeholders — real links or omit.
 
@@ -51,10 +70,14 @@ Escalate DE · Large worst-case combo failures to **P0** always.
 
 ## Collapsing findings + recommendations
 
-Do **not** duplicate prose in both "Critical findings" and "Recommendations". Use the single **Action items** table as source of truth; optional narrative only for complex RTL/focus issues.
+Do **not** duplicate prose in separate “Critical findings” and “Recommendations” sections. Use **Prioritized checklist** + **Action items** table as source of truth; optional narrative only for complex RTL/focus issues.
 
 ## Embed policy
 
 Default: embed screenshots for **FAIL + PARTIAL** cells inline; PASS cells summarized in matrix appendix only.
 
-If user or config requires full matrix embeds (`visualEvidence: full-matrix`), embed all locales but still lead with action items table.
+If user or config requires full matrix embeds (`visualEvidence: full-matrix`), embed all locales but still lead with the prioritized checklist.
+
+## Figma fitment (when Phase 4 runs)
+
+Before FINAL: every matrix and Font Scaling cell must pass the fitment loop in [figma-presentation-fitment.md](figma-presentation-fitment.md) — no documentation crop.

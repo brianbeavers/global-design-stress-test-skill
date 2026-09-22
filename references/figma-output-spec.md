@@ -12,10 +12,12 @@ Before marking a run complete:
 
 - [ ] Every locale × screen has a frame with translated text visible
 - [ ] `get_screenshot` confirms target language in user-facing strings
+- [ ] Full cell visible — no presentation crop (see [figma-presentation-fitment.md](figma-presentation-fitment.md))
+- [ ] **Issues Checklist** frame present (P0→P2) with Issue + Recommendation + Evidence
 - [ ] FAIL cells have baseline | locale side-by-side compare
 - [ ] No summary-only section without full grid
 
-See [visual-evidence-spec.md](visual-evidence-spec.md) and [translation-workflow.md](translation-workflow.md).
+See [visual-evidence-spec.md](visual-evidence-spec.md), [translation-workflow.md](translation-workflow.md), and [figma-presentation-fitment.md](figma-presentation-fitment.md).
 
 ## Section hierarchy
 
@@ -23,6 +25,7 @@ Create one top-level section per run:
 
 ```
 📁 Global Stress Test — {ProjectName} — {YYYY-MM-DD}
+├── 📄 Issues Checklist — prioritized
 ├── 📄 Summary
 ├── 📁 i18n Matrix — {localePack} ({localeCount} × {variantCount})
 ├── 📁 Font Scaling — risk locales
@@ -31,6 +34,42 @@ Create one top-level section per run:
 ```
 
 Place section on the same page as baseline or on a dedicated "Stress Test" page — ask user if unclear.
+
+## Issues Checklist frame (lead deliverable)
+
+Create **first** in the section (above Summary). Name: `Issues Checklist — prioritized`.
+
+Sort entries **P0 → P1 → P2**, then by category impact. Every FAIL/PARTIAL from the run must appear.
+
+**Item format (text in frame):**
+
+```
+☐ P0 · {locale} · {screen} · {category}
+Issue: {what broke — one sentence}
+Recommendation: {concrete fix — copy / layout / a11y / font scaling}
+Evidence: {frame name or node link — e.g. L1.1 · FS — DE · Large · widget}
+Owner: {Design | Eng | Content | Design+Eng}
+```
+
+Example:
+
+```
+☐ P0 · de-DE · widget · Font scaling
+Issue: Primary CTA German label clips at Large font
+Recommendation: Allow 2-line wrap; set min-height 48pt
+Evidence: FS — DE · Large · widget · FAIL
+Owner: Design+Eng
+
+☐ P1 · de-DE · widget · i18n
+Issue: Primary button text truncates at default scale
+Recommendation: Shorten DE copy or widen button
+Evidence: L1.1 — German · widget · FAIL
+Owner: Content
+```
+
+If overall PASS with zero FAIL/PARTIAL: frame states `No prioritized issues — all cells PASS` plus link to Summary.
+
+Severity rules: [report-agent-guide.md](report-agent-guide.md).
 
 ## Summary frame
 
@@ -56,8 +95,9 @@ Use design system text styles where available; fallback Inter 14/12.
 | Row label | `L{n} — {Locale label} ({code})` |
 | Column header | `{Screen variant}` |
 | Cell frame name | `L{n}.{m} — {Locale} · {Variant} · {PASS\|FAIL\|PARTIAL}` |
-| Cell size | Match baseline frame dimensions |
+| Cell size | Start from baseline width; **expand height** to fit content after localize/scale (see fitment) |
 | Spacing | 40px between cells, 80px between rows |
+| Fitment | Full cell visible after `get_screenshot` — never crop documentation cell |
 
 **RTL locales:** mirror cell content; add `RTL` tag in frame name for ar-*.
 
@@ -142,25 +182,36 @@ _Annotation / {Topic} — {optional scope}
 2. **Create section**
    - `use_figma` with `fileKey` — create section frame, set name
 
-3. **Clone and localize**
+3. **Issues Checklist frame**
+   - Create `Issues Checklist — prioritized` as first child
+   - Populate P0→P2 items from Phase 1–2.6 findings (Issue + Recommendation + Evidence + Owner)
+
+4. **Clone and localize** (or promote eval clones)
    - Extract string inventory from baseline (translation-workflow)
    - `use_figma` — clone per locale; **set text node `characters`** to translated strings
-   - `get_screenshot` per cell — verify language before marking PASS/FAIL
+   - **Fitment:** measure bounds → resize documentation cell to fit → badge
+   - `get_screenshot` full cell — verify language **and** no presentation crop
    - Batch by row — one `use_figma` call per locale row
 
-4. **Font scaling clones**
+5. **Font scaling clones**
    - Clone from localized frame; scale text per font-scaling-checklist
+   - Expand documentation cell after scale; `get_screenshot` full cell
 
-5. **Annotations**
+6. **Annotations**
    - `use_figma` — create `_Annotation` frames with findings text
 
-6. **Prototype uploads** (if `executionPath` is `prototype` or `both`)
+7. **Prototype uploads** (if `executionPath` is `prototype` or `both`)
    - Use PNGs **buffered from Phase 1/2.5** — do not re-capture
-   - `upload_assets` **after** steps 2–5 create section and matrix cell frames
-   - Place images in matrix cells via `use_figma`
+   - `upload_assets` **after** section + matrix cell frames exist
+   - Place images with **Fit** (contain); resize cell; `get_screenshot` full cell
 
-7. **Return links**
+8. **Fitment pass**
+   - Re-check every matrix and FS cell per [figma-presentation-fitment.md](figma-presentation-fitment.md)
+   - Fix any cropped cells before FINAL
+
+9. **Return links**
    - Construct `https://www.figma.com/design/{fileKey}/?node-id={sectionId}` (hyphens in URL)
+   - Include Issues Checklist node link in report header
 
 ## use_figma page context
 

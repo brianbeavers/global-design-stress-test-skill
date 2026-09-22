@@ -194,6 +194,8 @@ Do not advance to the next locale until step 3 passes for string visibility.
 | Prototype + `reportOnly: true` but calling `upload_assets` | Contradicts Figma-free mode — report only |
 | `use_figma` when `reportOnly: true` | Mutates Figma during Cursor-report-only run |
 | `upload_assets` in Phase 1 before Phase 4 section exists | Wrong order — buffer PNGs; upload in Phase 4 |
+| Matrix / FS cell crops screenshot or clone | Presentation crop — expand cell or Fit PNG ([figma-presentation-fitment.md](figma-presentation-fitment.md)) |
+| PNG Crop / Fill that cuts edges | Evidence incomplete |
 | "CTA probably clips in DE" without screenshot | Inference without evidence |
 
 ## Config

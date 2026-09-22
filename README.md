@@ -7,7 +7,7 @@ A portable **Cursor Agent Skill** (and multi-LLM workflow) for stress-testing UI
 1. **Install:** `git clone https://github.com/brianbeavers/global-design-stress-test-skill.git ~/.cursor/skills/global-design-stress-test`
 2. **Configure:** copy `stress-test-config.template.json` → `stress-test-config.json` (project name, Figma URL, screen variants)
 3. **Run:** `Run global-design-stress-test on [Figma URL]`
-4. **Read results:** open the report → **Action items (P0/P1)** first → failure screenshots → matrix appendix
+4. **Read results:** open the report → **Prioritized checklist (P0/P1)** first → failure screenshots → matrix appendix (in Figma: **Issues Checklist** frame first)
 
 Guides: [quick-start.md](references/quick-start.md) · [how-to-read-results.md](references/how-to-read-results.md)
 
@@ -17,10 +17,11 @@ Every run produces a **stakeholder report** structured for action:
 
 | Section | Who it's for | What you get |
 |---------|--------------|--------------|
-| **Action items** | Everyone | P0/P1/P2 fixes with owner and recommended action |
+| **Prioritized checklist** | Everyone | P0→P2 Issue + Recommendation + Evidence |
+| **Action items table** | Everyone | Same findings, scannable grid |
 | **Failures — visual evidence** | Design, QA | Screenshots of what broke |
 | **Matrix appendix** | QA, eng | Full PASS/FAIL grid |
-| **Figma deliverables** | Design | Linked visual matrix (when not report-only) |
+| **Figma deliverables** | Design | Issues Checklist + visual matrix (when not report-only); cells fully visible (no crop) |
 
 **P0** = ship blocker · **P1** = fix before launch · **P2** = polish
 
@@ -196,6 +197,7 @@ global-design-stress-test-skill/
 │   ├── how-to-read-results.md  ← reading the report (stakeholders)
 │   ├── report-template.md      ← report output shape
 │   ├── report-agent-guide.md   ← agents only
+│   ├── figma-presentation-fitment.md ← no cropped matrix cells
 │   └── …
 ├── examples/
 ├── adapters/

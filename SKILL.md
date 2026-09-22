@@ -69,6 +69,7 @@ Read these reference files when executing (do not duplicate their content here):
 | [how-to-read-results.md](references/how-to-read-results.md) | Share with stakeholders — priority levels, matrix columns |
 | [quick-start.md](references/quick-start.md) | Minimal run instructions |
 | [figma-output-spec.md](references/figma-output-spec.md) | Phase 4 Figma push |
+| [figma-presentation-fitment.md](references/figma-presentation-fitment.md) | Phase 4 — expand cells / Fit PNGs; no presentation crop |
 
 **Specialist skills** (read and delegate when flagged):
 
@@ -87,8 +88,8 @@ Task Progress:
 - [ ] Phase 2: Accessibility — scale-independent (focus, voice, non-color, RTL)
 - [ ] Phase 2.5: Font scaling (risk locales + failures)
 - [ ] Phase 2.6: Accessibility — post-scale (contrast, touch targets on scaled UI)
-- [ ] Phase 3: Emit stakeholder report (see report-agent-guide)
-- [ ] Phase 4: Push Figma section (skip if `reportOnly: true`) → mark report **FINAL**
+- [ ] Phase 3: Emit stakeholder report (prioritized checklist + action items)
+- [ ] Phase 4: Push Figma section (Issues Checklist + fitment pass) → mark report **FINAL** (skip if `reportOnly: true`)
 ```
 
 ## Phase 0 — Configuration
@@ -283,10 +284,11 @@ Read [report-agent-guide.md](references/report-agent-guide.md) first. Fill [repo
 
 ### Required content
 
-1. **Action items table** — every FAIL/PARTIAL with P0/P1/P2, owner, recommended fix (see report-agent-guide severity rules)
-2. **Failures — visual evidence** — screenshots for FAIL/PARTIAL cells (PASS cells in matrix appendix unless `full-matrix` embed required)
-3. **Matrix appendix** — all locales
-4. **Figma deliverables** — only when `reportOnly: false` and Phase 4 complete
+1. **Prioritized checklist** — every FAIL/PARTIAL with Issue + Recommendation + Evidence + Owner (P0→P2)
+2. **Action items table** — same findings, scannable grid
+3. **Failures — visual evidence** — screenshots for FAIL/PARTIAL cells (PASS cells in matrix appendix unless `full-matrix` embed required)
+4. **Matrix appendix** — all locales
+5. **Figma deliverables** — only when `reportOnly: false` and Phase 4 complete (include Issues Checklist link)
 
 Point stakeholders to [how-to-read-results.md](references/how-to-read-results.md).
 
@@ -294,18 +296,20 @@ Optionally write `docs/global-stress-test-{YYYY-MM-DD}.md` if user requests pers
 
 ## Phase 4 — Figma push-back
 
-Follow [figma-output-spec.md](references/figma-output-spec.md). **Skip entire phase** when `reportOnly: true`. When `reportOnly: false`: create **official** `{outputSectionName}` section; promote or rebuild from Phase 1–2.6 evaluation clones (figma-only) and/or `upload_assets` prototype PNGs.
+Follow [figma-output-spec.md](references/figma-output-spec.md) and [figma-presentation-fitment.md](references/figma-presentation-fitment.md). **Skip entire phase** when `reportOnly: true`. When `reportOnly: false`: create **official** `{outputSectionName}` section; promote or rebuild from Phase 1–2.6 evaluation clones (figma-only) and/or `upload_assets` prototype PNGs.
 
 ### MCP sequence
 
 1. `get_design_context` + `get_screenshot` on baseline
 2. `use_figma` — create official section `{outputSectionName} — {date}`
-3. Build **full** i18n matrix in section — from evaluation clones (figma-only) or new clones + prototype PNGs
-4. Add failure comparison pairs (baseline | failing locale)
-5. Add a11y annotation sidecars with screenshot refs
-6. Add Font Scaling rows with Small / Large screenshots (clone + scale per font-scaling-checklist)
-7. `upload_assets` — place **buffered prototype PNGs** from Phase 1/2.5 into matrix cells (`prototype` or `both` only; section must exist first)
-8. Return Figma section link; update report to **FINAL** status with link in header and Figma deliverables table
+3. Create **Issues Checklist — prioritized** frame (P0→P2; Issue + Recommendation + Evidence + Owner)
+4. Build **full** i18n matrix in section — from evaluation clones (figma-only) or new clones + prototype PNGs
+5. **Fitment:** expand documentation cells / Fit PNGs; `get_screenshot` full cell — no presentation crop
+6. Add failure comparison pairs (baseline | failing locale)
+7. Add a11y annotation sidecars with screenshot refs
+8. Add Font Scaling rows with Small / Large screenshots (clone + scale; expand cells after scale)
+9. `upload_assets` — place **buffered prototype PNGs** from Phase 1/2.5 into matrix cells (`prototype` or `both` only; Fit + resize cell)
+10. Fitment pass on all cells; return Figma section + Issues Checklist links; update report to **FINAL**
 
 ### Frame naming
 
@@ -314,6 +318,8 @@ Follow [figma-output-spec.md](references/figma-output-spec.md). **Skip entire ph
 Font scaling: `FS — {Small|Large} · {Locale} · {Screen} · {PASS|FAIL}`
 
 Worst case: `FS — DE · Large · {Screen} · WORST CASE`
+
+Issues checklist: `Issues Checklist — prioritized`
 
 ## Risk locale set (default)
 

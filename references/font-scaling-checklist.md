@@ -100,13 +100,15 @@ Split by phase:
 
 **Phases 1–2.6 (figma-only + `reportOnly: false`):** clone from Phase 1 evaluation frame; scale text per platform table; `get_screenshot` each tier for report evidence — scratch frames, not official section.
 
-**Phase 4:** create official Font Scaling rows in `{outputSectionName}` — clone from eval frames or rebuild; add `_Annotation / Font scaling` sidecars.
+**Phase 4:** create official Font Scaling rows in `{outputSectionName}` — clone from eval frames or rebuild; add `_Annotation / Font scaling` sidecars. Apply [figma-presentation-fitment.md](figma-presentation-fitment.md).
 
 1. Clone locale frame from Phase 1 evaluation clone (or Phase 4 i18n matrix cell)
-2. Scale text nodes per platform table — **do not** auto-expand fixed parent frames
-3. Name: `FS — {Small|Large} · {Locale} · {Screen} · {PASS|FAIL}`
-4. Worst case: `FS — DE · Large · {Screen} · WORST CASE`
-5. Sidecar: `_Annotation / Font scaling — {screen}` listing:
+2. Scale text nodes per platform table — **do not** auto-expand **product** fixed parents (CTAs, card rows) — surface clipping as FAIL
+3. **Do** expand the **documentation** cell frame after scaling so the full (possibly clipped) UI is visible — never crop the cell
+4. Name: `FS — {Small|Large} · {Locale} · {Screen} · {PASS|FAIL}`
+5. Worst case: `FS — DE · Large · {Screen} · WORST CASE`
+6. `get_screenshot` full cell — reject presentation crop
+7. Sidecar: `_Annotation / Font scaling — {screen}` listing:
    - Elements with fixed height
    - `truncate` / single-line constraints
    - Non-wrapping auto-layout
